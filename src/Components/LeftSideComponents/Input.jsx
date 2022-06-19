@@ -82,11 +82,11 @@ export class Input extends Component {
         })
 
     }
-    // const convdata = this.state.tracker[0].transactionAmount
+    // const convdata = this.state.tracker
     // console.log(res)
     const mapAmt = this.state.tracker.map(totAmt => totAmt.transactionAmount)
     const parseIntAmt = parseInt(mapAmt)
-    const reduceAmt = parseIntAmt.reduce((a, b) => (a += b), 0)
+    const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0)
     // const totalAmt = reduceAmt.Math.trunk()
     // console.log(totalAmt)
     console.log(typeof(reduceAmt))
