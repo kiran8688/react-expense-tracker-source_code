@@ -25,9 +25,9 @@ export class Input extends Component {
 
     transactions.push({ id: Math.random(), transactionName: document.querySelector('#name-input').value, transactionAmount: document.querySelector('#amount-input').value, transactionDate: document.querySelector('#date-input').value })
 
-
-
     this.setState({ tracker: transactions })
+
+
     // this.setState({
     //   tracker :[
     //   {id: Math.random(), transactionName : document.querySelector('#name-input').value, transactionAmount : document.querySelector('#amount-input').value, transactionDate : document.querySelector('#date-input').value},
@@ -63,18 +63,20 @@ export class Input extends Component {
 
   render(props) {
 
-    if (this.state.tracker === []) {
-      var transact = (<center><br /><br /> Please add details of transaction</center>)
+    var transact
+
+    if (this.state.tracker == "") {
+      transact = ( <center className=" fs-5 text-secondary " >Currently no transaction Recorded, Please add details of the transaction </center>  )
     }
 
-    if (this.state.tracker !== "") {
+    else {
 
       transact =
         this.state.tracker.map((transaction, index) => {
 
           return (
 
-            <DisplaySec2 key={this.state.tracker[index].id} dispName={this.state.tracker[index].transactionName} dispAmount={this.state.tracker[index].transactionAmount} dispDate={this.state.tracker[index].transactionDate} />
+            <DisplaySec2 key={this.state.tracker[index].id} dispName={this.state.tracker[index].transactionName} dispAmount={this.state.tracker[index].transactionAmount} dispDate={this.state.tracker[index].transactionDate}  />
 
 
           )
@@ -82,14 +84,23 @@ export class Input extends Component {
         })
 
     }
+
+    console.log(this.state.tracker)
+
     // const convdata = this.state.tracker
     // console.log(res)
-    const mapAmt = this.state.tracker.map(totAmt => totAmt.transactionAmount)
-    const parseIntAmt = parseInt(mapAmt)
-    const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0)
+    const mapAmt = this.state.tracker.map(totAmt => (parseInt(totAmt.transactionAmount)))
+  
+    const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0).toFixed(2)
+
     // const totalAmt = reduceAmt.Math.trunk()
     // console.log(totalAmt)
-    console.log(typeof(reduceAmt))
+    console.log(reduceAmt)
+
+    const totAmtSaveed = mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0).toFixed(2)
+    const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0)*-1).toFixed(2)
+
+    // if(mapAmt  )
 
     return (
       <>
@@ -101,14 +112,14 @@ export class Input extends Component {
             </div>
             <br /><br /><br />
 
-            <div className="h4 container-fluid ms-2" >Enter Amount : <label className='fs-6 opacity-75'>(Add <strong className='fs-3 text-success ' >+</strong> if its <span className='text-success'>INCOME</span>     ,    Add <strong className='fs-2 text-danger' >-</strong> if its <span className='text-danger'>Expense</span>)</label><input type="number" id='amount-input' className='form-control' placeholder='Enter Transaction Amount' onChange={this.takeAmountHandler} />
+            <div className="h4 container-fluid ms-2" >Enter Amount : <label className='fs-6 opacity-75'>(Add <strong className='fs-3 text-success ' >+</strong> if its <span className='text-success'>INCOME</span>     ,    Add <strong className='fs-2 text-danger' >-</strong> if its <span className='text-danger'>EXPENSE</span>)</label><input type="number" id='amount-input' className='form-control' placeholder='Enter Transaction Amount' onChange={this.takeAmountHandler} />
             </div>
             <br /><br /><br />
             <div className="h4 container-fluid ms-2 " >Date of Transaction :  <input type="date" id='date-input' className='form-control' onChange={this.takeDateHandler} />
             </div>
             <br /><br /><br />
-            <button type='submit' className=' btn btn-primary ms-1 container-fluid  text-white border-white rounded-5 form-control' onClick={this.inputClickEventHandler}  >submit</button>
-            <br /><br /><br /><br /> <br /><br /><br /><br />
+            <button type='submit' className=' btn btn-primary ms-1 container-fluid  text-white border-white rounded-5 form-control' onClick={()=>this.inputClickEventHandler()}  >submit</button>
+            <br /><br /><br />
 
 
           </div>
@@ -118,7 +129,7 @@ export class Input extends Component {
           </div>
 
           <div className='col-8'>
-            <DisplaySec1 />
+            <DisplaySec1 dispBalAmt={reduceAmt} Income={totAmtSaveed} Expense={totAmtSpent} />
 
             <div className='mt-4'>
               <hr /> <span className='fs-2'>History  :</span>
@@ -134,6 +145,9 @@ export class Input extends Component {
     )
   }
 }
+
+
+
 
 export default Input;
 

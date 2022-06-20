@@ -1,0 +1,66 @@
+
+/* @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"); */
+
+/* #delete-button::before{
+
+    opacity: 1;
+    
+} */
+/* hover{
+    box-shadow: 0 1rem 3rem rgb(32, 190, 0, 700) !important;
+} */
+/* height: 500;
+width: 100; */
+/* opacity: 0; */
+/* #delete-button::after{
+    opacity: 1;
+} */
+/* 
+.btn-close {
+    height: 20px;
+    width: 39px;
+} */
+/* #list::before svg{
+    opacity: 0; */
+    
+    /* opacity: 1; */
+    /* top: 50%;
+    left: 0; */
+    /* position: absolute;
+    transform: translate(-100%, -50%);
+    transition: transform 250ms ease-in; */
+/* } */
+
+/* #list:hover svg{
+    
+    cursor: pointer;
+    background-color: #e74c3c;
+    border: 0;
+    color: #fff;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 2px 5px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+} */
+
+
+
+/* cursor: pointer; */
+/* opacity: 0; */
+/* transform: translateX(50%); */
+ /* svg{
+    opacity: 0;
+} */
+
+#list:hover{
+    
+     /* font-style:  \F78B; */
+
+     cursor: pointer;
+
+}
