@@ -5,4 +5,19 @@
 }
 #vr{
     height: 100%;
+    /* backdrop-filter: opacity(20%); */
 }
+/* .App{
+    filter: blur(5px);
+    background-image: url(https://img.freepik.com/free-photo/close-up-shot-indian-rupee-banknotes_8087-2292.jpg?w=1380);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+} */
+/* background-color: lightgoldenrodyellow; */
+/* #root{
+    background-image: url(https://img.freepik.com/free-vector/dollars-illustration-set_74855-4404.jpg?t=st=1655822155~exp=1655822755~hmac=c266c5904021dbb62a4921aafdbb8feeaf897e7f03554c05fb689f1952a880d6&w=1380);
+  } */
+  
+  .App{
+    background-color: rgb(233, 247, 255);
+  }

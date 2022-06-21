@@ -21,9 +21,13 @@ export class Input extends Component {
 
 
 
-    var transactions = [...this.state.tracker]
+    const transactions = [...this.state.tracker]
 
-    transactions.push({ id: Math.random(), transactionName: document.querySelector('#name-input').value, transactionAmount: document.querySelector('#amount-input').value, transactionDate: document.querySelector('#date-input').value })
+    var checkAmount = (document.querySelector('#amount-input').value ==="") ? 0: document.querySelector('#amount-input').value
+    var checkName = (document.querySelector('#name-input').value ==="") ? "default-transaction" : document.querySelector('#name-input').value
+    var checkDate = (document.querySelector('#date-input').value ==="") ? '0001-01-01' : document.querySelector('#date-input').value
+
+    transactions.push({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
 
     this.setState({ tracker: transactions })
 
@@ -32,7 +36,7 @@ export class Input extends Component {
     //   tracker :[
     //   {id: Math.random(), transactionName : document.querySelector('#name-input').value, transactionAmount : document.querySelector('#amount-input').value, transactionDate : document.querySelector('#date-input').value},
 
-    //   ]
+    //   ] 
     // })
 
     // this.state.tracker.push(this.setState.tracker) = transactions
@@ -40,25 +44,49 @@ export class Input extends Component {
     // var tracker = this.state.tracker
     //  this.tracker.push(transact)
     //  console.log(this.tracker);
-
-    // document.querySelector('#name-input').value=null, document.querySelector('#amount-input').value=null, document.querySelector('#date-input').value=null; 
-  }
-
-
-  takeNameHandler = (e) => {
-
-    // this.setState( this.state.tracker[0].transactionName =  e.target.value)
-    console.log(e.target.value)
+    
+    // checkName= ''
+    // checkAmount= ''
+    // checkDate= ''
+    document.querySelector('#name-input').value = "";
+    document.querySelector('#amount-input').value = "none"
+    document.querySelector('#date-input').value = "none"
 
   }
-  takeAmountHandler = (e) => {
 
-    console.log(e.target.value)
-  }
-  takeDateHandler = (e) => {
 
-    console.log(e.target.value)
+
+  // takeNameHandler = (e) => {
+
+  //   // this.setState( this.state.tracker[0].transactionName =  e.target.value)
+  //   console.log(e.target.value)
+
+  // }
+  // takeAmountHandler = (e) => {
+
+  //   console.log(e.target.value)
+  // }
+  // takeDateHandler = (e) => {
+
+  //   console.log(e.target.value)
+  // }
+  
+
+  deleteHandler = (transactionId) =>{
+    const transactions = [...this.state.tracker]
+    console.log(transactionId)
+    transactions.splice(transactionId, 1)
+    this.setState({tracker: transactions})
   }
+
+  // deletePersonHandler = (personIndex) => {
+  //   // If I remove one object from the persons list
+
+  //   // copy of the state persons
+  //   const personCopy = [...this.state.persons]
+  //   personCopy.splice(personIndex, 1)
+  //   this.setState({ persons: personCopy })
+  // }
 
 
   render(props) {
@@ -76,11 +104,15 @@ export class Input extends Component {
 
           return (
 
-            <DisplaySec2 key={this.state.tracker[index].id} dispName={this.state.tracker[index].transactionName} dispAmount={this.state.tracker[index].transactionAmount} dispDate={this.state.tracker[index].transactionDate}  />
+            <DisplaySec2 key={this.state.tracker[index].id}  
+            dispName={this.state.tracker[index].transactionName}  
+            dispAmount={this.state.tracker[index].transactionAmount } 
+            dispDate={this.state.tracker[index].transactionDate} 
+            trash={ () => this.deleteHandler([index])}  />
 
 
           )
-
+            
         })
 
     }
@@ -90,8 +122,12 @@ export class Input extends Component {
     // const convdata = this.state.tracker
     // console.log(res)
     const mapAmt = this.state.tracker.map(totAmt => (parseInt(totAmt.transactionAmount)))
+    
+    
   
     const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0).toFixed(2)
+
+    // var checkReduce = (reduceAmt = NaN)? 0 : reduceAmt
 
     // const totalAmt = reduceAmt.Math.trunk()
     // console.log(totalAmt)
@@ -100,12 +136,13 @@ export class Input extends Component {
     const totAmtSaveed = mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0).toFixed(2)
     const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0)*-1).toFixed(2)
 
+    
     // if(mapAmt  )
 
     return (
       <>
-        <div className='row'>
-          <div id='input-head' className='col-3 ms-1 text-dark text-start bg-white'><br /><br /><br /><br />
+        <div  className='row'>
+          <div id='input-head' className='col-3 ms-1 text-dark text-start'><br /><br /><br /><br />
             <div className='container '><u className='opacity-75'><em> Add New Transaction Here :</em></u></div>
             <br /><br />
             <div className="h4 container-fluid ms-2 " >Transaction Name:  <input type="text" id='name-input' className='form-control' placeholder='Enter Transaction Name' onChange={this.takeNameHandler} />
@@ -132,7 +169,7 @@ export class Input extends Component {
             <DisplaySec1 dispBalAmt={reduceAmt} Income={totAmtSaveed} Expense={totAmtSpent} />
 
             <div className='mt-4'>
-              <hr /> <span className='fs-2'>History  :</span>
+              <hr /> <span className='fs-2'>History   :</span>
 
               <br /><br />
 
@@ -145,6 +182,24 @@ export class Input extends Component {
     )
   }
 }
+
+// Input.defaultProps = {
+
+//   dispName: 'some transaction',
+//   dispAmount: 0,
+//   dispDate: 0
+
+// }
+
+
+
+// Input.defaultProps = {
+
+//   transactionName: 'some transaction',
+//   transactionAmount: 0,
+//   transactionDate: 0
+
+// }
 
 
 
