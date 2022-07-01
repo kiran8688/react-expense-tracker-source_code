@@ -15,7 +15,7 @@ export class DisplaySec2 extends Component {
         <div id='list' className=' row fs-4 mb-1'>
           <ul className=' col-11 container-auto ps-5 '>
 
-            <li className=' row  rounded border-end border-5  border-danger mb-3 p-2 list-group-item shadow-lg d-flex bg-light'  > <strong className=' text-truncate col-6'>{this.props.dispName}</strong> <span className='col-3 text-secondary'>{this.props.dispDate}</span> <span className='col-3 text-truncate'> <span>-$</span>{this.props.dispAmount * -1}</span> </li>
+            <li id='dangerLi' className=' row  rounded border-end border-5  border-danger mb-3 p-2 list-group-item shadow-lg d-flex '  > <strong className=' text-truncate col-6'>{this.props.dispName}</strong> <span className='col-3 text-secondary'>{this.props.dispDate}</span> <span className='col-3 text-truncate'> <span>-$</span>{this.props.dispAmount * -1}</span> </li>
           </ul>
           {/*----------------- trash (delete Icon) here------------------------------------------------------ */}
           <svg onClick={this.props.trash} id='delete-button' xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash3  col-1 mt-3 " viewBox="0 0 16 16">
@@ -36,7 +36,7 @@ export class DisplaySec2 extends Component {
         <div id='list' className=' row fs-4 mb-1'>
           <ul className=' col-11 container-auto ps-5 '>
 
-            <li className=' row rounded border-end border-5  border-success mb-3 p-2 list-group-item shadow-lg d-flex bg-light '  > <strong className=' text-truncate col-6'>{this.props.dispName}</strong> <span className='col-3 text-secondary'>{this.props.dispDate}</span> <span className='col-3 text-truncate'> <span>+$</span>{this.props.dispAmount}</span> </li>
+            <li id='successLi' className=' row rounded border-end border-5  border-success mb-3 p-2 list-group-item shadow-lg d-flex  '  > <strong className=' text-truncate col-6'>{this.props.dispName}</strong> <span className='col-3 text-secondary'>{this.props.dispDate}</span> <span className='col-3 text-truncate'> <span>+$</span>{this.props.dispAmount}</span> </li>
 
           </ul>
           {/*----------------- trash (delete Icon) here------------------------------------------------------ */}

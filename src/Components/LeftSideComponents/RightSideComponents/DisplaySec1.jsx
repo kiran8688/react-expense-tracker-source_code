@@ -20,7 +20,7 @@ export class DisplaySec1 extends Component {
       <div className='one'>
         <div className='fs-1 mt-3  '>
           {/* --------------------------------------------------***Balance UI starts here***-------------------------------------------------- */}
-          Your Balance is  {Balance}
+          Your Balance is <strong>{Balance}</strong>
         </div><br />
 
         <div className="container px-1">

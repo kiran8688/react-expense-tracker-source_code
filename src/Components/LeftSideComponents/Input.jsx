@@ -23,7 +23,7 @@ export class Input extends Component {
 
     this.setState({ tracker: transactions })
 
-    console.log(transactions)
+    // console.log(transactions)
 //------------------------------// Making Given Inputs as None here //---------------------------------------------//  
     document.querySelector('#name-input').value = "";
     document.querySelector('#amount-input').value = "none"
@@ -34,7 +34,7 @@ export class Input extends Component {
 
   deleteHandler = (transactionId) => {
     const transactions = [...this.state.tracker]
-    console.log(transactionId)
+    // console.log(transactionId)
     transactions.splice(transactionId, 1)
     this.setState({ tracker: transactions })
   }
@@ -81,7 +81,7 @@ render(props) {
 
     // console.log(reduceAmt)
 
-    const totAmtSaveed = mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0).toFixed(2)
+    const totAmtSaveed = (mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0)).toFixed(2)
     const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0) * -1).toFixed(2)
 
     //-----------------------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ render(props) {
       {/*-----------------------------------------------------------------------*** Input component UI starts from here ***------------------------------------------------------------------------------- */}
         <div className='row'>
           <div id='input-head' className='col-3 ms-1 text-dark text-start'><br /><br /><br /><br />
-            <div className='container '><u className='opacity-75'><em> Add New Transaction Here :</em></u></div>
+            <div className='container '><u className='opacity-75'><em> Add New Transaction Here</em></u>  :</div>
             <br /><br />
             <div className="h4 container-fluid ms-2 " >Transaction Name:  <input type="text" id='name-input' className='form-control' placeholder='Enter Transaction Name' onChange={this.takeNameHandler} />
             </div>
@@ -109,7 +109,7 @@ render(props) {
 
           </div>
       {/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div className='col-auto h1 text-black '>
+          <div className='col-auto h1 text-black mt-4 mb-3 '>
             <div id='vr' className="vr "></div>
           </div>
 
@@ -119,7 +119,7 @@ render(props) {
 
             <div className='mt-4'>
               {/*--------- DisplaySec2  renders from here---------- */}
-              <hr /> <span className='fs-2'>History   :</span>
+              <hr /> <strong className='fs-2 text-muted'><u>History</u>   :</strong>
 
               <br /><br />
               {/*------***look  at DisplaySec2 render logic (UI)***----------- */}
