@@ -1,52 +1,47 @@
 import React, { Component } from 'react'
-import './DisplaySec2.css'
 
 export class DisplaySec2 extends Component {
+  render() {
+    const isIncome = parseFloat(this.props.dispAmount) > 0;
 
+    return (
+      <div className="group relative flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-3xl hover:bg-white/10 hover:border-white/10 hover:scale-[1.01] hover:translate-x-2 transition-all duration-300 overflow-hidden">
+        {/* Type Indicator */}
+        <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isIncome ? 'bg-neon-green shadow-[0_0_15px_rgba(57,255,20,0.5)]' : 'bg-neon-pink shadow-[0_0_15px_rgba(255,0,127,0.5)]'}`}></div>
 
-  render(props) {
-
-    // ---------------------------------------------------------------------***History list starts from here ****Red Color list UI****-----------------------------------------------------------------------------
-    if (this.props.dispAmount <= 0) {
-
-      return (
-
-        <div id='list' className=' row fs-4 mb-1'>
-          <ul className=' col-11 container-auto ps-5 '>
-
-            <li id='dangerLi' className=' row  rounded border-end border-5  border-danger mb-3 p-2 list-group-item shadow-lg d-flex '  > <strong className=' text-truncate col-6'>{this.props.dispName}</strong> <span className='col-3 text-secondary'>{this.props.dispDate}</span> <span className='col-3 text-truncate'> <span>-$</span>{this.props.dispAmount * -1}</span> </li>
-          </ul>
-          {/*----------------- trash (delete Icon) here------------------------------------------------------ */}
-          <svg onClick={this.props.trash} id='delete-button' role="button" tabIndex="0" aria-label="Delete transaction" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash3  col-1 mt-3 " viewBox="0 0 16 16">
-
-            <path id='path' d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-          </svg>
-        </div>
-      )
-
-      // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    }
-    // ---------------------------------------------------------------------***History list starts from here ****Green Color list UI****-----------------------------------------------------------------------------
-
-    else {
-
-      return (
-
-        <div id='list' className=' row fs-4 mb-1'>
-          <ul className=' col-11 container-auto ps-5 '>
-
-            <li id='successLi' className=' row rounded border-end border-5  border-success mb-3 p-2 list-group-item shadow-lg d-flex  '  > <strong className=' text-truncate col-6'>{this.props.dispName}</strong> <span className='col-3 text-secondary'>{this.props.dispDate}</span> <span className='col-3 text-truncate'> <span>+$</span>{this.props.dispAmount}</span> </li>
-
-          </ul>
-          {/*----------------- trash (delete Icon) here------------------------------------------------------ */}
-          <svg onClick={this.props.trash} id='delete-button' role="button" tabIndex="0" aria-label="Delete transaction" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash3 col-1 mt-3 " viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-          </svg>
+        <div className="flex items-center gap-6">
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xl ${isIncome ? 'bg-neon-green/10 text-neon-green' : 'bg-neon-pink/10 text-neon-pink'}`}>
+                {isIncome ? '↑' : '↓'}
+            </div>
+            <div className="flex flex-col">
+                <span className="text-lg font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
+                    {this.props.dispName}
+                </span>
+                <span className="text-xs font-medium text-white/30 uppercase tracking-widest mt-1">
+                    {this.props.dispDate}
+                </span>
+            </div>
         </div>
 
-      )
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    }
+        <div className="flex items-center gap-8">
+            <div className={`text-xl font-black tabular-nums ${isIncome ? 'text-neon-green' : 'text-neon-pink'}`}>
+                {isIncome ? '+' : '-'}${Math.abs(this.props.dispAmount).toFixed(2)}
+            </div>
+
+            <button
+                onClick={this.props.trash}
+                className="p-3 rounded-xl bg-white/0 hover:bg-neon-pink/10 text-white/20 hover:text-neon-pink transition-all group-hover:opacity-100"
+                aria-label="Delete Entry"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 6h18"></path>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+            </button>
+        </div>
+      </div>
+    )
   }
 }
 

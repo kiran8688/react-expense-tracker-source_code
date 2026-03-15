@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import './Input.css'
 import DisplaySec1 from './RightSideComponents/DisplaySec1';
 import DisplaySec2 from './RightSideComponents/DisplaySec2';
+
 export class Input extends Component {
-//----------------***Declaring State Here***---------------------------------
   constructor(props) {
     super(props)
     this.state = {
       tracker: []
     }
   }
-//---------------------------------//Input Click event handler - allocated operation//----------------------------------------------//
+
   inputClickEventHandler = () => {
-
     const transactions = [...this.state.tracker]
-
     const amountInput = document.querySelector('#amount-input');
     const nameInput = document.querySelector('#name-input');
     const dateInput = document.querySelector('#date-input');
@@ -23,124 +20,101 @@ export class Input extends Component {
     if (isNaN(checkAmount)) checkAmount = 0;
 
     let checkName = (nameInput.value.trim() === "") ? "default-transaction" : nameInput.value.trim();
-    // Basic sanitization and validation: limit length
     checkName = checkName.substring(0, 100);
 
-    let checkDate = (dateInput.value === "") ? '0001-01-01' : dateInput.value;
-    // Ensure date is valid format
+    let checkDate = (dateInput.value === "") ? new Date().toISOString().split('T')[0] : dateInput.value;
     if (isNaN(Date.parse(checkDate))) {
-      checkDate = '0001-01-01';
+      checkDate = new Date().toISOString().split('T')[0];
     }
 
-    transactions.push({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
-
+    transactions.unshift({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
     this.setState({ tracker: transactions })
 
-    // console.log(transactions)
-//------------------------------// Making Given Inputs as None here //---------------------------------------------//
     nameInput.value = "";
     amountInput.value = "";
     dateInput.value = "";
-
   }
-//-------------------------------------delete operation  logic from here ------------------------------------------
 
-  deleteHandler = (transactionId) => {
+  deleteHandler = (index) => {
     const transactions = [...this.state.tracker]
-    // console.log(transactionId)
-    transactions.splice(transactionId, 1)
+    transactions.splice(index, 1)
     this.setState({ tracker: transactions })
   }
-//----------------------------------------------------------------------------------------------------------
 
-//---------------------------render starts from here--------------------------------------------------------------
-render(props) {
-
-    var transact
-//---------------------------------------------DisplaySec2 render logic from here (UI)----------------------------------------------
-    if (this.state.tracker.length === 0) {
-      transact = (<center className=" fs-5 text-secondary " >Currently no transaction Recorded, Please add details of the transaction </center>)
-    }
-
-    else {
-
-      transact =
-        this.state.tracker.map((transaction, index) => {
-
-          return (
-
-            <DisplaySec2 key={this.state.tracker[index].id}
-              dispName={this.state.tracker[index].transactionName}
-              dispAmount={this.state.tracker[index].transactionAmount}
-              dispDate={this.state.tracker[index].transactionDate}
-              trash={() => this.deleteHandler([index])} />
-
-
-          )
-
-        })
-
-    }
-//--------------------------------------------------------------------------------------------------------------------------------------
-    // console.log(this.state.tracker)
-
-    //---------------- DisplaySec1 logic from here ----------------------------------------
-
-    const mapAmt = this.state.tracker.map(totAmt => (parseInt(totAmt.transactionAmount)))
-
-
-
-    const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0).toFixed(2)
-
-    // console.log(reduceAmt)
-
-    const totAmtSaveed = (mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0)).toFixed(2)
-    const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0) * -1).toFixed(2)
-
-    //-----------------------------------------------------------------------------------------------------
+  render() {
+    const mapAmt = this.state.tracker.map(t => parseFloat(t.transactionAmount))
+    const balance = mapAmt.reduce((a, b) => a + b, 0).toFixed(2)
+    const income = mapAmt.filter(a => a > 0).reduce((a, b) => a + b, 0).toFixed(2)
+    const expense = (mapAmt.filter(a => a < 0).reduce((a, b) => a + b, 0) * -1).toFixed(2)
 
     return (
-      <>
-      {/*-----------------------------------------------------------------------*** Input component UI starts from here ***------------------------------------------------------------------------------- */}
-        <div className='row'>
-          <div id='input-head' className='col-3 ms-1 text-dark text-start'><br /><br /><br /><br />
-            <div className='container '><u className='opacity-75'><em> Add New Transaction Here</em></u>  :</div>
-            <br /><br />
-            <div className="h4 container-fluid ms-2 " >Transaction Name:  <input type="text" id='name-input' className='form-control' placeholder='Enter Transaction Name' onChange={this.takeNameHandler} />
-            </div>
-            <br /><br /><br />
+      <div className='flex flex-col lg:flex-row gap-8 items-start animate-[slideIn_0.5s_ease-out]'>
+        <div className='w-full lg:w-1/3 sticky top-8'>
+          <div className='glass-morphism p-8 neon-shadow-blue'>
+            <h3 className='text-2xl font-bold mb-8 flex items-center gap-2'>
+              <span className='w-2 h-8 bg-neon-blue rounded-full'></span>
+              NEW LOG
+            </h3>
 
-            <div className="h4 container-fluid ms-2" >Enter Amount : <label className='fs-6 opacity-75'>(Add <strong className='fs-3 text-success ' >+</strong> if its <span className='text-success'>INCOME</span>     ,    Add <strong className='fs-2 text-danger' >-</strong> if its <span className='text-danger'>EXPENSE</span>)</label><input type="number" id='amount-input' className='form-control' placeholder='Enter Transaction Amount' onChange={this.takeAmountHandler} />
-            </div>
-            <br /><br /><br />
-            <div className="h4 container-fluid ms-2 " >Date of Transaction :  <input type="date" id='date-input' className='form-control' onChange={this.takeDateHandler} />
-            </div>
-            <br /><br /><br />
-            <button type='submit' className=' btn btn-primary ms-1 container-fluid  text-white border-white rounded-5 form-control' onClick={() => this.inputClickEventHandler()}  >submit</button>
-            <br /><br /><br />
+            <div className="space-y-6">
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black">Designation</label>
+                <input type="text" id='name-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all placeholder:text-white/10" placeholder='TRANSACTION ID' />
+              </div>
 
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black">Credit/Debit Unit</label>
+                <input type="number" id='amount-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all placeholder:text-white/10" placeholder='0.00' />
+              </div>
 
-          </div>
-      {/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */}
-          <div className='col-auto h1 text-black mt-4 mb-3 '>
-            <div id='vr' className="vr "></div>
-          </div>
+              <div>
+                <label className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black">Temporal Stamp</label>
+                <input type="date" id='date-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all [color-scheme:dark]" />
+              </div>
 
-          <div className='col-8'>
-            {/*---------- DisplaySec1 renders from here--------- */}
-            <DisplaySec1 dispBalAmt={reduceAmt} Income={totAmtSaveed} Expense={totAmtSpent} />
-
-            <div className='mt-4'>
-              {/*--------- DisplaySec2  renders from here---------- */}
-              <hr /> <strong className='fs-2 text-muted'><u>History</u>   :</strong>
-
-              <br /><br />
-              {/*------***look  at DisplaySec2 render logic (UI)***----------- */}
-              {transact}
+              <button className='w-full py-5 rounded-2xl bg-gradient-to-r from-neon-blue to-blue-600 text-white font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(0,210,255,0.3)]' onClick={this.inputClickEventHandler}>
+                Initialize Entry
+              </button>
             </div>
           </div>
         </div>
-      </>
+
+        <div className='w-full lg:w-2/3 space-y-8'>
+          <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
+
+          <div className='glass-morphism p-8 min-h-[400px] relative overflow-hidden'>
+            <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
+                <h2 className="text-8xl font-black rotate-12">RECORDS</h2>
+            </div>
+
+            <h2 className='text-3xl font-black mb-10 flex items-center gap-4'>
+              DATA FEED
+              <span className="flex-1 h-px bg-white/10"></span>
+            </h2>
+
+            <div className='space-y-4'>
+              {this.state.tracker.length === 0 ? (
+                <div className='flex flex-col items-center justify-center py-20 text-white/20 uppercase tracking-[0.3em] font-bold'>
+                  <div className="w-20 h-20 border-2 border-dashed border-white/10 rounded-full flex items-center justify-center mb-4">
+                    <span className="text-4xl">!</span>
+                  </div>
+                  No sector activity detected
+                </div>
+              ) : (
+                this.state.tracker.map((transaction, index) => (
+                  <DisplaySec2
+                    key={transaction.id}
+                    dispName={transaction.transactionName}
+                    dispAmount={transaction.transactionAmount}
+                    dispDate={transaction.transactionDate}
+                    trash={() => this.deleteHandler(index)}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 }
