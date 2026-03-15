@@ -10,24 +10,37 @@ export class Input extends Component {
       tracker: []
     }
   }
-//---------------------------------//Input Click event handler - allocated operation//----------------------------------------------// 
+//---------------------------------//Input Click event handler - allocated operation//----------------------------------------------//
   inputClickEventHandler = () => {
 
     const transactions = [...this.state.tracker]
 
-    var checkAmount = (document.querySelector('#amount-input').value === "") ? 0 : document.querySelector('#amount-input').value
-    var checkName = (document.querySelector('#name-input').value === "") ? "default-transaction" : document.querySelector('#name-input').value
-    var checkDate = (document.querySelector('#date-input').value === "") ? '0001-01-01' : document.querySelector('#date-input').value
+    const amountInput = document.querySelector('#amount-input');
+    const nameInput = document.querySelector('#name-input');
+    const dateInput = document.querySelector('#date-input');
+
+    let checkAmount = (amountInput.value === "") ? 0 : parseFloat(amountInput.value);
+    if (isNaN(checkAmount)) checkAmount = 0;
+
+    let checkName = (nameInput.value.trim() === "") ? "default-transaction" : nameInput.value.trim();
+    // Basic sanitization and validation: limit length
+    checkName = checkName.substring(0, 100);
+
+    let checkDate = (dateInput.value === "") ? '0001-01-01' : dateInput.value;
+    // Ensure date is valid format
+    if (isNaN(Date.parse(checkDate))) {
+      checkDate = '0001-01-01';
+    }
 
     transactions.push({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
 
     this.setState({ tracker: transactions })
 
     // console.log(transactions)
-//------------------------------// Making Given Inputs as None here //---------------------------------------------//  
-    document.querySelector('#name-input').value = "";
-    document.querySelector('#amount-input').value = "none"
-    document.querySelector('#date-input').value = "none"
+//------------------------------// Making Given Inputs as None here //---------------------------------------------//
+    nameInput.value = "";
+    amountInput.value = "";
+    dateInput.value = "";
 
   }
 //-------------------------------------delete operation  logic from here ------------------------------------------
