@@ -15,9 +15,22 @@ export class Input extends Component {
 
     const transactions = [...this.state.tracker]
 
-    var checkAmount = (document.querySelector('#amount-input').value === "") ? 0 : document.querySelector('#amount-input').value
-    var checkName = (document.querySelector('#name-input').value === "") ? "default-transaction" : document.querySelector('#name-input').value
-    var checkDate = (document.querySelector('#date-input').value === "") ? '0001-01-01' : document.querySelector('#date-input').value
+    const amountInput = document.querySelector('#amount-input');
+    const nameInput = document.querySelector('#name-input');
+    const dateInput = document.querySelector('#date-input');
+
+    let checkAmount = (amountInput.value === "") ? 0 : parseFloat(amountInput.value);
+    if (isNaN(checkAmount)) checkAmount = 0;
+
+    let checkName = (nameInput.value.trim() === "") ? "default-transaction" : nameInput.value.trim();
+    // Basic sanitization and validation: limit length
+    checkName = checkName.substring(0, 100);
+
+    let checkDate = (dateInput.value === "") ? '0001-01-01' : dateInput.value;
+    // Ensure date is valid format
+    if (isNaN(Date.parse(checkDate))) {
+      checkDate = '0001-01-01';
+    }
 
     transactions.push({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
 
@@ -25,9 +38,9 @@ export class Input extends Component {
 
     // console.log(transactions)
 //------------------------------// Making Given Inputs as None here //---------------------------------------------//
-    document.querySelector('#name-input').value = "";
-    document.querySelector('#amount-input').value = "none"
-    document.querySelector('#date-input').value = "none"
+    nameInput.value = "";
+    amountInput.value = "";
+    dateInput.value = "";
 
   }
 //-------------------------------------delete operation  logic from here ------------------------------------------
@@ -73,17 +86,16 @@ render(props) {
 
     //---------------- DisplaySec1 logic from here ----------------------------------------
 
-    const totals = this.state.tracker.reduce((acc, totAmt) => {
-      const amount = parseInt(totAmt.transactionAmount);
-      acc.balance += amount;
-      if (amount >= 0) acc.saved += amount;
-      if (amount <= 0) acc.spent += amount;
-      return acc;
-    }, { balance: 0, saved: 0, spent: 0 });
+    const mapAmt = this.state.tracker.map(totAmt => (parseInt(totAmt.transactionAmount)))
 
-    const reduceAmt = totals.balance.toFixed(2);
-    const totAmtSaveed = totals.saved.toFixed(2);
-    const totAmtSpent = (totals.spent * -1).toFixed(2);
+
+
+    const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0).toFixed(2)
+
+    // console.log(reduceAmt)
+
+    const totAmtSaveed = (mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0)).toFixed(2)
+    const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0) * -1).toFixed(2)
 
     //-----------------------------------------------------------------------------------------------------
 
