@@ -45,7 +45,7 @@ render(props) {
 
     var transact
 //---------------------------------------------DisplaySec2 render logic from here (UI)----------------------------------------------
-    if (this.state.tracker == "") {
+    if (this.state.tracker.length === 0) {
       transact = (<center className=" fs-5 text-secondary " >Currently no transaction Recorded, Please add details of the transaction </center>)
     }
 
