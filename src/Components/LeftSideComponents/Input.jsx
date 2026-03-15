@@ -14,7 +14,7 @@ export class Input extends Component {
   inputClickEventHandler = () => {
 
     const transactions = [...this.state.tracker]
-
+                 
     var checkAmount = (document.querySelector('#amount-input').value === "") ? 0 : document.querySelector('#amount-input').value
     var checkName = (document.querySelector('#name-input').value === "") ? "default-transaction" : document.querySelector('#name-input').value
     var checkDate = (document.querySelector('#date-input').value === "") ? '0001-01-01' : document.querySelector('#date-input').value
@@ -84,6 +84,18 @@ render(props) {
     const reduceAmt = totals.balance.toFixed(2);
     const totAmtSaveed = totals.saved.toFixed(2);
     const totAmtSpent = (totals.spent * -1).toFixed(2);
+
+    //---------------- DisplaySec1 logic from here ----------------------------------------
+
+    const mapAmt = this.state.tracker.map(totAmt => (parseInt(totAmt.transactionAmount)))
+
+
+
+    const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0).toFixed(2)
+
+
+    const totAmtSaveed = (mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0)).toFixed(2)
+    const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0) * -1).toFixed(2)
 
     //-----------------------------------------------------------------------------------------------------
 
