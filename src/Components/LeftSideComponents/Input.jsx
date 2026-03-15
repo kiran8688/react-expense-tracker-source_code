@@ -10,7 +10,7 @@ export class Input extends Component {
       tracker: []
     }
   }
-//---------------------------------//Input Click event handler - allocated operation//----------------------------------------------// 
+//---------------------------------//Input Click event handler - allocated operation//----------------------------------------------//
   inputClickEventHandler = () => {
 
     const transactions = [...this.state.tracker]
@@ -23,8 +23,7 @@ export class Input extends Component {
 
     this.setState({ tracker: transactions })
 
-    // console.log(transactions)
-//------------------------------// Making Given Inputs as None here //---------------------------------------------//  
+//------------------------------// Making Given Inputs as None here //---------------------------------------------//
     document.querySelector('#name-input').value = "";
     document.querySelector('#amount-input').value = "none"
     document.querySelector('#date-input').value = "none"
@@ -34,7 +33,6 @@ export class Input extends Component {
 
   deleteHandler = (transactionId) => {
     const transactions = [...this.state.tracker]
-    // console.log(transactionId)
     transactions.splice(transactionId, 1)
     this.setState({ tracker: transactions })
   }
@@ -69,7 +67,6 @@ render(props) {
 
     }
 //--------------------------------------------------------------------------------------------------------------------------------------
-    // console.log(this.state.tracker)
 
     //---------------- DisplaySec1 logic from here ----------------------------------------
 
@@ -79,7 +76,6 @@ render(props) {
 
     const reduceAmt = mapAmt.reduce((a, b) => (a += b), 0).toFixed(2)
 
-    // console.log(reduceAmt)
 
     const totAmtSaveed = (mapAmt.filter(saved => saved >= 0).reduce((a, b) => (a += b), 0)).toFixed(2)
     const totAmtSpent = (mapAmt.filter(spent => spent <= 0).reduce((a, b) => (a += b), 0) * -1).toFixed(2)
