@@ -14,7 +14,7 @@ export class Input extends Component {
   inputClickEventHandler = () => {
 
     const transactions = [...this.state.tracker]
-
+                 
     var checkAmount = (document.querySelector('#amount-input').value === "") ? 0 : document.querySelector('#amount-input').value
     var checkName = (document.querySelector('#name-input').value === "") ? "default-transaction" : document.querySelector('#name-input').value
     var checkDate = (document.querySelector('#date-input').value === "") ? '0001-01-01' : document.querySelector('#date-input').value
@@ -23,6 +23,7 @@ export class Input extends Component {
 
     this.setState({ tracker: transactions })
 
+    // console.log(transactions)
 //------------------------------// Making Given Inputs as None here //---------------------------------------------//
     document.querySelector('#name-input').value = "";
     document.querySelector('#amount-input').value = "none"
@@ -33,6 +34,7 @@ export class Input extends Component {
 
   deleteHandler = (transactionId) => {
     const transactions = [...this.state.tracker]
+    // console.log(transactionId)
     transactions.splice(transactionId, 1)
     this.setState({ tracker: transactions })
   }
@@ -67,6 +69,21 @@ render(props) {
 
     }
 //--------------------------------------------------------------------------------------------------------------------------------------
+    // console.log(this.state.tracker)
+
+    //---------------- DisplaySec1 logic from here ----------------------------------------
+
+    const totals = this.state.tracker.reduce((acc, totAmt) => {
+      const amount = parseInt(totAmt.transactionAmount);
+      acc.balance += amount;
+      if (amount >= 0) acc.saved += amount;
+      if (amount <= 0) acc.spent += amount;
+      return acc;
+    }, { balance: 0, saved: 0, spent: 0 });
+
+    const reduceAmt = totals.balance.toFixed(2);
+    const totAmtSaveed = totals.saved.toFixed(2);
+    const totAmtSpent = (totals.spent * -1).toFixed(2);
 
     //---------------- DisplaySec1 logic from here ----------------------------------------
 
