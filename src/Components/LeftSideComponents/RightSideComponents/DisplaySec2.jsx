@@ -2,43 +2,53 @@ import React, { Component } from 'react'
 
 export class DisplaySec2 extends Component {
   render() {
-    const isIncome = parseFloat(this.props.dispAmount) > 0;
+    const isIncome = parseFloat(this.props.dispAmount) >= 0;
+    const absAmount = Math.abs(parseFloat(this.props.dispAmount)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedAmount = (isIncome ? '+' : '-') + '$' + absAmount;
+
+    // Based on Expense Tracker Pro logic:
+    // Fallback category visual representation
+    const catLabel = isIncome ? 'Income' : 'Expense';
+    const catIcon = isIncome ? 'I' : 'E';
+    const catColor = isIncome ? '#10b981' : '#f59e0b'; // Just using some default colors for simplicity, similar to the original JS script
+
+    // Format date string to match "Dec 12" style if possible
+    let dateStr = this.props.dispDate;
+    try {
+      const d = new Date(this.props.dispDate);
+      if (!isNaN(d.getTime())) {
+        dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+    } catch(e) {}
 
     return (
-      <div className="group relative flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-3xl hover:bg-white/10 hover:border-white/10 hover:scale-[1.01] hover:translate-x-2 transition-all duration-300 overflow-hidden">
-        {/* Type Indicator */}
-        <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isIncome ? 'bg-neon-green shadow-[0_0_15px_rgba(57,255,20,0.5)]' : 'bg-neon-pink shadow-[0_0_15px_rgba(255,0,127,0.5)]'}`}></div>
-
-        <div className="flex items-center gap-6">
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xl ${isIncome ? 'bg-neon-green/10 text-neon-green' : 'bg-neon-pink/10 text-neon-pink'}`}>
-                {isIncome ? '↑' : '↓'}
-            </div>
-            <div className="flex flex-col">
-                <span className="text-lg font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
-                    {this.props.dispName}
-                </span>
-                <span className="text-xs font-medium text-white/30 uppercase tracking-widest mt-1">
-                    {this.props.dispDate}
-                </span>
-            </div>
+      <div className="transaction-item flex items-center gap-3 p-3.5 rounded-xl mb-2 cursor-default group" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${catColor}18` }}>
+          <span className="text-base">{catIcon}</span>
         </div>
 
-        <div className="flex items-center gap-8">
-            <div className={`text-xl font-black tabular-nums ${isIncome ? 'text-neon-green' : 'text-neon-pink'}`}>
-                {isIncome ? '+' : '-'}${Math.abs(this.props.dispAmount).toFixed(2)}
-            </div>
+        <div className="flex-1 min-w-0">
+          <p className="tx-title text-sm font-semibold text-gray-200 truncate">{this.props.dispName}</p>
+          <div className="flex items-center gap-2 mt-0.5">
+            <span className="tx-cat text-[11px] font-medium text-gray-500">{catLabel}</span>
+            <span className="text-gray-700">·</span>
+            <span className="tx-date text-[11px] text-gray-600">{dateStr}</span>
+          </div>
+        </div>
 
-            <button
-                onClick={this.props.trash}
-                className="p-3 rounded-xl bg-white/0 hover:bg-neon-pink/10 text-white/20 hover:text-neon-pink transition-all group-hover:opacity-100"
-                aria-label="Delete Entry"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 6h18"></path>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                </svg>
-            </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="tx-amount mono text-sm font-bold" style={{ color: isIncome ? '#34d399' : '#f87171' }}>
+            {formattedAmount}
+          </span>
+          <button
+            onClick={this.props.trash}
+            className="w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ background: 'rgba(239,68,68,0.1)' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f87171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-2">
+              <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>
+            </svg>
+          </button>
         </div>
       </div>
     )
