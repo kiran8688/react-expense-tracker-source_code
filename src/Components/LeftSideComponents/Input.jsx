@@ -103,7 +103,7 @@ export class Input extends Component {
               ) : (
                 this.state.tracker.map((transaction, index) => (
                   <DisplaySec2
-                    key={transaction.id}
+                    key={transaction.id || index}
                     dispName={transaction.transactionName}
                     dispAmount={transaction.transactionAmount}
                     dispDate={transaction.transactionDate}
