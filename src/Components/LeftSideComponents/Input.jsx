@@ -58,17 +58,17 @@ export class Input extends Component {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black">Designation</label>
+                <label htmlFor='name-input' className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black cursor-pointer">Designation</label>
                 <input type="text" id='name-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all placeholder:text-white/10" placeholder='TRANSACTION ID' />
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black">Credit/Debit Unit</label>
+                <label htmlFor='amount-input' className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black cursor-pointer">Credit/Debit Unit</label>
                 <input type="number" id='amount-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all placeholder:text-white/10" placeholder='0.00' />
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black">Temporal Stamp</label>
+                <label htmlFor='date-input' className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black cursor-pointer">Temporal Stamp</label>
                 <input type="date" id='date-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all [color-scheme:dark]" />
               </div>
 
