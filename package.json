@@ -36,6 +36,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.28.6",
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
     "gh-pages": "^6.3.0"
   }
 }
