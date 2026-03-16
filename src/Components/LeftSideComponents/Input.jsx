@@ -138,20 +138,15 @@ export class Input extends Component {
                   No sector activity detected
                 </div>
               ) : (
-                tracker
-                  .filter(t => filter === 'all' ? true : filter === 'income' ? parseFloat(t.transactionAmount) > 0 : parseFloat(t.transactionAmount) < 0)
-                  .map((transaction) => {
-                    const index = tracker.findIndex(tr => tr.id === transaction.id);
-                    return (
-                      <DisplaySec2
-                        key={transaction.id}
-                        dispName={transaction.transactionName}
-                        dispAmount={transaction.transactionAmount}
-                        dispDate={transaction.transactionDate}
-                        trash={() => this.deleteHandler(index)}
-                      />
-                    )
-                  })
+                this.state.tracker.map((transaction, index) => (
+                  <DisplaySec2
+                    key={transaction.id || index}
+                    dispName={transaction.transactionName}
+                    dispAmount={transaction.transactionAmount}
+                    dispDate={transaction.transactionDate}
+                    trash={() => this.deleteHandler(index)}
+                  />
+                ))
               )}
             </div>
           </div>
