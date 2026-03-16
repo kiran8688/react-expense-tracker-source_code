@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import DisplaySec1 from './RightSideComponents/DisplaySec1';
 import DisplaySec2 from './RightSideComponents/DisplaySec2';
 
@@ -6,18 +6,31 @@ export class Input extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      tracker: []
+      tracker: [],
+      currentType: 'expense',
+      currentFilter: 'all'
     }
+  }
+
+  setType = (type) => {
+    this.setState({ currentType: type })
+  }
+
+  setFilter = (filter) => {
+    this.setState({ currentFilter: filter })
   }
 
   inputClickEventHandler = () => {
     const transactions = [...this.state.tracker]
-    const amountInput = document.querySelector('#amount-input');
-    const nameInput = document.querySelector('#name-input');
-    const dateInput = document.querySelector('#date-input');
+    const amountInput = document.querySelector('#input-amount');
+    const nameInput = document.querySelector('#input-title');
+    const dateInput = document.querySelector('#input-date');
 
     const rawAmount = amountInput.value === "" ? 0 : parseFloat(amountInput.value);
-    const checkAmount = isNaN(rawAmount) ? 0 : rawAmount;
+    const checkAmountBase = isNaN(rawAmount) ? 0 : rawAmount;
+
+    // Convert to negative if expense, positive if income
+    const finalAmount = this.state.currentType === 'expense' ? -Math.abs(checkAmountBase) : Math.abs(checkAmountBase);
 
     const rawName = nameInput.value.trim();
     const checkName = (rawName === "" ? "default-transaction" : rawName).substring(0, 100);
@@ -25,12 +38,18 @@ export class Input extends Component {
     const rawDate = dateInput.value === "" ? new Date().toISOString().split('T')[0] : dateInput.value;
     const checkDate = isNaN(Date.parse(rawDate)) ? new Date().toISOString().split('T')[0] : rawDate;
 
-    transactions.unshift({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
+    transactions.unshift({
+      id: Math.random(),
+      transactionName: checkName,
+      transactionAmount: finalAmount,
+      transactionDate: checkDate,
+      type: this.state.currentType
+    })
     this.setState({ tracker: transactions })
 
     nameInput.value = "";
     amountInput.value = "";
-    dateInput.value = "";
+    dateInput.value = new Date().toISOString().split('T')[0];
   }
 
   deleteHandler = (index) => {
@@ -39,80 +58,120 @@ export class Input extends Component {
     this.setState({ tracker: transactions })
   }
 
+  componentDidMount() {
+    const dateInput = document.querySelector('#input-date');
+    if (dateInput) {
+      dateInput.value = new Date().toISOString().split('T')[0];
+    }
+  }
+
   render() {
     const mapAmt = this.state.tracker.map(t => parseFloat(t.transactionAmount))
     const balance = mapAmt.reduce((a, b) => a + b, 0).toFixed(2)
     const income = mapAmt.filter(a => a > 0).reduce((a, b) => a + b, 0).toFixed(2)
     const expense = (mapAmt.filter(a => a < 0).reduce((a, b) => a + b, 0) * -1).toFixed(2)
 
+    const filteredTracker = this.state.tracker.filter(t => {
+      if (this.state.currentFilter === 'all') return true;
+      const isIncome = t.transactionAmount > 0;
+      if (this.state.currentFilter === 'income') return isIncome;
+      if (this.state.currentFilter === 'expense') return !isIncome;
+      return true;
+    });
+
     return (
-      <div className='flex flex-col lg:flex-row gap-8 items-start animate-[slideIn_0.5s_ease-out]'>
-        <div className='w-full lg:w-1/3 sticky top-8'>
-          <div className='glass-morphism p-8 neon-shadow-blue'>
-            <h3 className='text-2xl font-bold mb-8 flex items-center gap-2'>
-              <span className='w-2 h-8 bg-neon-blue rounded-full'></span>
-              NEW LOG
-            </h3>
+      <Fragment>
+        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
-            <div className="space-y-6">
-              <div>
-                <label htmlFor='name-input' className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black cursor-pointer">Designation</label>
-                <input type="text" id='name-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all placeholder:text-white/10" placeholder='TRANSACTION ID' />
-              </div>
+        {/* Add Transaction Form */}
+        <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
+          <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="flex items-center gap-2 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus-circle">
+                <circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/>
+              </svg>
+              <h2 className="text-sm font-semibold text-gray-300">New Transaction</h2>
+            </div>
 
-              <div>
-                <label htmlFor='amount-input' className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black cursor-pointer">Credit/Debit Unit</label>
-                <input type="number" id='amount-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all placeholder:text-white/10" placeholder='0.00' />
-              </div>
-
-              <div>
-                <label htmlFor='date-input' className="block text-[10px] uppercase tracking-widest text-white/40 mb-2 font-black cursor-pointer">Temporal Stamp</label>
-                <input type="date" id='date-input' className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-neon-blue focus:bg-white/10 transition-all [color-scheme:dark]" />
-              </div>
-
-              <button className='w-full py-5 rounded-2xl bg-gradient-to-r from-neon-blue to-blue-600 text-white font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(0,210,255,0.3)]' onClick={this.inputClickEventHandler}>
-                Initialize Entry
+            {/* Type Toggle */}
+            <div className="flex rounded-xl p-1 mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <button
+                id="type-expense"
+                onClick={() => this.setType('expense')}
+                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all ${this.state.currentType === 'expense' ? 'text-[#f87171]' : 'text-gray-500'}`}
+                style={{ background: this.state.currentType === 'expense' ? 'rgba(239,68,68,0.2)' : 'transparent' }}
+              >
+                Expense
+              </button>
+              <button
+                id="type-income"
+                onClick={() => this.setType('income')}
+                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all ${this.state.currentType === 'income' ? 'text-[#34d399]' : 'text-gray-500'}`}
+                style={{ background: this.state.currentType === 'income' ? 'rgba(16,185,129,0.2)' : 'transparent' }}
+              >
+                Income
               </button>
             </div>
-          </div>
-        </div>
 
-        <div className='w-full lg:w-2/3 space-y-8'>
-          <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
-
-          <div className='glass-morphism p-8 min-h-[400px] relative overflow-hidden'>
-            <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-                <h2 className="text-8xl font-black rotate-12">RECORDS</h2>
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <input id="input-title" type="text" placeholder="Description" className="col-span-2 w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input id="input-amount" type="number" min="0" step="0.01" placeholder="Amount" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 mono focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
             </div>
 
-            <h2 className='text-3xl font-black mb-10 flex items-center gap-4'>
-              DATA FEED
-              <span className="flex-1 h-px bg-white/10"></span>
-            </h2>
+            <button id="add-btn" onClick={this.inputClickEventHandler} className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
+                <path d="M5 12h14"/><path d="M12 5v14"/>
+              </svg>
+              <span>Add Transaction</span>
+            </button>
+          </div>
+        </section>
 
-            <div className='space-y-4'>
-              {this.state.tracker.length === 0 ? (
-                <div className='flex flex-col items-center justify-center py-20 text-white/20 uppercase tracking-[0.3em] font-bold'>
-                  <div className="w-20 h-20 border-2 border-dashed border-white/10 rounded-full flex items-center justify-center mb-4">
-                    <span className="text-4xl">!</span>
-                  </div>
-                  No sector activity detected
+        {/* Filter Tabs */}
+        <section className="px-5 pt-1 pb-2 anim-slide-up delay-4" style={{ opacity: 1 }}>
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-sm font-semibold text-gray-400">Recent Activity</h2>
+            <div className="flex rounded-lg p-0.5" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <button onClick={() => this.setFilter('all')} id="filter-all" className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'all' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>All</button>
+              <button onClick={() => this.setFilter('income')} id="filter-income" className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'income' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Income</button>
+              <button onClick={() => this.setFilter('expense')} id="filter-expense" className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'expense' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Expense</button>
+            </div>
+          </div>
+        </section>
+
+        {/* Transaction List */}
+        <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5" style={{ opacity: 1 }}>
+          <div id="transaction-list">
+            {filteredTracker.length === 0 ? (
+              <div id="empty-state" className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(99,102,241,0.1)' }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-receipt">
+                    <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>
+                  </svg>
                 </div>
-              ) : (
-                this.state.tracker.map((transaction, index) => (
+                <p className="text-gray-500 text-sm font-medium">No transactions yet</p>
+                <p className="text-gray-600 text-xs mt-1">Add your first transaction above</p>
+              </div>
+            ) : (
+              filteredTracker.map((transaction, index) => {
+                // Find actual index in original tracker array for deletion
+                const originalIndex = this.state.tracker.findIndex(t => t.id === transaction.id);
+                return (
                   <DisplaySec2
                     key={transaction.id}
                     dispName={transaction.transactionName}
                     dispAmount={transaction.transactionAmount}
                     dispDate={transaction.transactionDate}
-                    trash={() => this.deleteHandler(index)}
+                    trash={() => this.deleteHandler(originalIndex)}
                   />
-                ))
-              )}
-            </div>
+                )
+              })
+            )}
           </div>
-        </div>
-      </div>
+        </section>
+
+      </Fragment>
     )
   }
 }
