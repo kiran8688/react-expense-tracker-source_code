@@ -22,7 +22,7 @@ export class DisplaySec2 extends Component {
     } catch(e) {}
 
     return (
-      <div className="transaction-item flex items-center gap-3 p-3.5 rounded-xl mb-2 cursor-default group" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+      <div role="listitem" id={isIncome ? 'successLi' : 'dangerLi'} className={`transaction-item flex items-center gap-3 p-3.5 rounded-xl mb-2 cursor-default group ${isIncome ? 'border-success' : 'border-danger'}`} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${catColor}18` }}>
           <span className="text-base">{catIcon}</span>
         </div>
@@ -42,6 +42,7 @@ export class DisplaySec2 extends Component {
           </span>
           <button
             onClick={this.props.trash}
+            aria-label="Delete transaction"
             className="w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
             style={{ background: 'rgba(239,68,68,0.1)' }}
           >

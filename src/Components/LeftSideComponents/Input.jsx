@@ -10,6 +10,9 @@ export class Input extends Component {
       currentType: 'expense',
       currentFilter: 'all'
     }
+    this.amountInputRef = React.createRef();
+    this.nameInputRef = React.createRef();
+    this.dateInputRef = React.createRef();
   }
 
   setType = (type) => {
@@ -22,9 +25,9 @@ export class Input extends Component {
 
   inputClickEventHandler = () => {
     const transactions = [...this.state.tracker]
-    const amountInput = document.querySelector('#input-amount');
-    const nameInput = document.querySelector('#input-title');
-    const dateInput = document.querySelector('#input-date');
+    const amountInput = this.amountInputRef.current;
+    const nameInput = this.nameInputRef.current;
+    const dateInput = this.dateInputRef.current;
 
     const rawAmount = amountInput.value === "" ? 0 : parseFloat(amountInput.value);
     const checkAmountBase = isNaN(rawAmount) ? 0 : rawAmount;
@@ -59,7 +62,7 @@ export class Input extends Component {
   }
 
   componentDidMount() {
-    const dateInput = document.querySelector('#input-date');
+    const dateInput = this.dateInputRef.current;
     if (dateInput) {
       dateInput.value = new Date().toISOString().split('T')[0];
     }
@@ -114,9 +117,9 @@ export class Input extends Component {
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-3">
-              <input id="input-title" type="text" placeholder="Description" className="col-span-2 w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
-              <input id="input-amount" type="number" min="0" step="0.01" placeholder="Amount" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 mono focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
-              <input id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
+              <input ref={this.nameInputRef} id="input-title" type="text" placeholder="Description" className="col-span-2 w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="Amount" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 mono focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input ref={this.dateInputRef} id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
             </div>
 
             <button id="add-btn" onClick={this.inputClickEventHandler} className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
