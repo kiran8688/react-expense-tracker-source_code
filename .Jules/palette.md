@@ -1,3 +1,0 @@
-## 2026-03-16 - Neon Tracker Accessibility Insights
- **Learning:** Integrating highly customized visual themes (like neon glow and glassmorphism) often obscures native semantic meanings. By systematically adding ARIA roles (e.g., `role="listitem"`) and descriptive `aria-label` attributes to custom div structures, we can ensure the interface remains understandable to screen readers without compromising the futuristic aesthetic.
- **Action:** Added dynamic `aria-label` attributes to balance indicators and transaction rows, and hid decorative elements (`aria-hidden="true"`) to prevent screen reader clutter in the 'Neon Tracker' app redesign.
