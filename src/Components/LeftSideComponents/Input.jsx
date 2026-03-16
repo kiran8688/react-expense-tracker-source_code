@@ -98,7 +98,7 @@ export class Input extends Component {
                   <div className="w-20 h-20 border-2 border-dashed border-white/10 rounded-full flex items-center justify-center mb-4">
                     <span className="text-4xl">!</span>
                   </div>
-                  No sector activity detected
+                  Currently no transaction Recorded, Please add details of the transaction
                 </div>
               ) : (
                 this.state.tracker.map((transaction, index) => (
