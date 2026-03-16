@@ -27,7 +27,7 @@ export class Input extends Component {
       checkDate = new Date().toISOString().split('T')[0];
     }
 
-    transactions.unshift({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
+    transactions.unshift({ id: crypto.randomUUID(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
     this.setState({ tracker: transactions })
 
     nameInput.value = "";
