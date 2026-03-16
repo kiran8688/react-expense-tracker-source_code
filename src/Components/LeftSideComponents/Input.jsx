@@ -16,16 +16,14 @@ export class Input extends Component {
     const nameInput = document.querySelector('#name-input');
     const dateInput = document.querySelector('#date-input');
 
-    let checkAmount = (amountInput.value === "") ? 0 : parseFloat(amountInput.value);
-    if (isNaN(checkAmount)) checkAmount = 0;
+    const rawAmount = amountInput.value === "" ? 0 : parseFloat(amountInput.value);
+    const checkAmount = isNaN(rawAmount) ? 0 : rawAmount;
 
-    let checkName = (nameInput.value.trim() === "") ? "default-transaction" : nameInput.value.trim();
-    checkName = checkName.substring(0, 100);
+    const rawName = nameInput.value.trim();
+    const checkName = (rawName === "" ? "default-transaction" : rawName).substring(0, 100);
 
-    let checkDate = (dateInput.value === "") ? new Date().toISOString().split('T')[0] : dateInput.value;
-    if (isNaN(Date.parse(checkDate))) {
-      checkDate = new Date().toISOString().split('T')[0];
-    }
+    const rawDate = dateInput.value === "" ? new Date().toISOString().split('T')[0] : dateInput.value;
+    const checkDate = isNaN(Date.parse(rawDate)) ? new Date().toISOString().split('T')[0] : rawDate;
 
     transactions.unshift({ id: Math.random(), transactionName: checkName, transactionAmount: checkAmount, transactionDate: checkDate })
     this.setState({ tracker: transactions })
