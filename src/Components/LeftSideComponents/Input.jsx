@@ -97,19 +97,21 @@ export class Input extends Component {
             </div>
 
             {/* Type Toggle */}
-            <div className="flex rounded-xl p-1 mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <div role="group" aria-label="Transaction Type" className="flex rounded-xl p-1 mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
               <button
                 id="type-expense"
+                aria-pressed={this.state.currentType === 'expense'}
                 onClick={() => this.setType('expense')}
-                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all ${this.state.currentType === 'expense' ? 'text-[#f87171]' : 'text-gray-500'}`}
+                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'expense' ? 'text-[#f87171]' : 'text-gray-500'}`}
                 style={{ background: this.state.currentType === 'expense' ? 'rgba(239,68,68,0.2)' : 'transparent' }}
               >
                 Expense
               </button>
               <button
                 id="type-income"
+                aria-pressed={this.state.currentType === 'income'}
                 onClick={() => this.setType('income')}
-                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all ${this.state.currentType === 'income' ? 'text-[#34d399]' : 'text-gray-500'}`}
+                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'income' ? 'text-[#34d399]' : 'text-gray-500'}`}
                 style={{ background: this.state.currentType === 'income' ? 'rgba(16,185,129,0.2)' : 'transparent' }}
               >
                 Income
@@ -117,12 +119,12 @@ export class Input extends Component {
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-3">
-              <input ref={this.nameInputRef} id="input-title" type="text" placeholder="Description" className="col-span-2 w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
-              <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="Amount" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 mono focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
-              <input ref={this.dateInputRef} id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
+              <input ref={this.nameInputRef} aria-label="Description" id="input-title" type="text" placeholder="Description" className="col-span-2 w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input ref={this.amountInputRef} aria-label="Amount" id="input-amount" type="number" min="0" step="0.01" placeholder="Amount" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input ref={this.dateInputRef} aria-label="Date" id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
             </div>
 
-            <button id="add-btn" onClick={this.inputClickEventHandler} className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
+            <button id="add-btn" onClick={this.inputClickEventHandler} className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
                 <path d="M5 12h14"/><path d="M12 5v14"/>
               </svg>
@@ -135,10 +137,10 @@ export class Input extends Component {
         <section className="px-5 pt-1 pb-2 anim-slide-up delay-4" style={{ opacity: 1 }}>
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-400">Recent Activity</h2>
-            <div className="flex rounded-lg p-0.5" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <button onClick={() => this.setFilter('all')} id="filter-all" className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'all' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>All</button>
-              <button onClick={() => this.setFilter('income')} id="filter-income" className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'income' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Income</button>
-              <button onClick={() => this.setFilter('expense')} id="filter-expense" className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'expense' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Expense</button>
+            <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <button onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'all' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>All</button>
+              <button onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'income' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Income</button>
+              <button onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'expense' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Expense</button>
             </div>
           </div>
         </section>

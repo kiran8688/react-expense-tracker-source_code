@@ -1,0 +1,4 @@
+
+## 2025-02-13 - Focus Visibility on Hover-only Elements
+**Learning:** Hidden-on-hover actions (like delete buttons hidden with `opacity-0` until `group-hover:opacity-100`) completely break keyboard accessibility unless paired with equivalent focus states. Keyboard users tabbing through the UI would just see their focus disappear on the hidden element. Furthermore, indiscriminately adding `focus:outline-none` without `focus-visible:ring-x` fallbacks disables default browser focus rings entirely.
+**Action:** When hiding elements visually until hover, always pair `group-hover:opacity-100` with `focus-visible:opacity-100`. Additionally, if replacing default focus outlines with `focus:outline-none`, always provide a custom visible focus indicator using `focus-visible:ring-2` (using a color appropriate for the component's context).
