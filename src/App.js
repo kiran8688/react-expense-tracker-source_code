@@ -5,7 +5,8 @@ import Input from './Components/LeftSideComponents/Input';
 class App extends Component {
   render() {
     return (
-      <div id="app" className="h-full w-full flex flex-col overflow-auto scrollbar-thin" style={{ background: 'linear-gradient(160deg, #0a0a0f 0%, #0f1020 40%, #0a0a0f 100%)' }}>
+      <div id="app" className="h-full w-full flex flex-col overflow-auto scrollbar-thin items-center" style={{ background: 'linear-gradient(160deg, #0a0a0f 0%, #0f1020 40%, #0a0a0f 100%)' }}>
+        <div className="w-full max-w-2xl flex flex-col h-full">
         <header className="px-5 pt-6 pb-2 flex items-center justify-between anim-slide-up">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" id="logo-box" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}>
@@ -23,6 +24,7 @@ class App extends Component {
         </header>
 
         <Input />
+        </div>
       </div>
     );
   }

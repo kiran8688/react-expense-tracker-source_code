@@ -1,0 +1,22 @@
+<<<<<<< SEARCH
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <input ref={this.nameInputRef} aria-label="Description" id="input-title" type="text" placeholder="Description" className="col-span-2 w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input ref={this.amountInputRef} aria-label="Amount" id="input-amount" type="number" min="0" step="0.01" placeholder="Amount" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-600 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              <input ref={this.dateInputRef} aria-label="Date" id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
+            </div>
+=======
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <div className="col-span-2">
+                <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description</label>
+                <input ref={this.nameInputRef} id="input-title" type="text" placeholder="e.g. Groceries" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              </div>
+              <div>
+                <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount</label>
+                <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+              </div>
+              <div>
+                <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date</label>
+                <input ref={this.dateInputRef} id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
+              </div>
+            </div>
+>>>>>>> REPLACE
