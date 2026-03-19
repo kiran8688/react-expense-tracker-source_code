@@ -53,6 +53,7 @@ export class Input extends Component {
     nameInput.value = "";
     amountInput.value = "";
     dateInput.value = new Date().toISOString().split('T')[0];
+    nameInput.focus();
   }
 
   deleteHandler = (index) => {
@@ -118,27 +119,29 @@ export class Input extends Component {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 mb-3">
-              <div className="col-span-2">
-                <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description</label>
-                <input ref={this.nameInputRef} id="input-title" type="text" placeholder="e.g. Groceries" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+            <form onSubmit={(e) => { e.preventDefault(); this.inputClickEventHandler(); }}>
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <div className="col-span-2">
+                  <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description <span className="text-red-500">*</span></label>
+                  <input ref={this.nameInputRef} id="input-title" type="text" placeholder="e.g. Groceries" required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+                </div>
+                <div>
+                  <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount <span className="text-red-500">*</span></label>
+                  <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+                </div>
+                <div>
+                  <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date <span className="text-red-500">*</span></label>
+                  <input ref={this.dateInputRef} id="input-date" type="date" required className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
+                </div>
               </div>
-              <div>
-                <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount</label>
-                <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
-              </div>
-              <div>
-                <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date</label>
-                <input ref={this.dateInputRef} id="input-date" type="date" className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
-              </div>
-            </div>
 
-            <button id="add-btn" onClick={this.inputClickEventHandler} className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
-                <path d="M5 12h14"/><path d="M12 5v14"/>
-              </svg>
-              <span>Add Transaction</span>
-            </button>
+              <button type="submit" id="add-btn" className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
+                  <path d="M5 12h14"/><path d="M12 5v14"/>
+                </svg>
+                <span>Add Transaction</span>
+              </button>
+            </form>
           </div>
         </section>
 
