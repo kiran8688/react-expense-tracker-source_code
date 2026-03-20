@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 export class DisplaySec2 extends Component {
   render() {
     const isIncome = parseFloat(this.props.dispAmount) >= 0;
-    const absAmount = Math.abs(parseFloat(this.props.dispAmount)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const formattedAmount = (isIncome ? '+' : '-') + '$' + absAmount;
+    const absAmount = Math.abs(parseFloat(this.props.dispAmount)).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedAmount = (isIncome ? '+' : '-') + '₹' + absAmount;
 
     // Based on Expense Tracker Pro logic:
     // Fallback category visual representation

@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 export class DisplaySec1 extends Component {
   render() {
     const bal = parseFloat(this.props.dispBalAmt);
-    const formattedBalance = (bal < 0 ? '-' : '') + '$' + Math.abs(bal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const formattedIncome = '$' + parseFloat(this.props.Income).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const formattedExpense = '$' + parseFloat(this.props.Expense).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedBalance = (bal < 0 ? '-' : '') + '₹' + Math.abs(bal).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedIncome = '₹' + parseFloat(this.props.Income).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedExpense = '₹' + parseFloat(this.props.Expense).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     return (
       <section className="px-5 pt-4 pb-2 anim-slide-up delay-1" style={{ opacity: 1 }}>

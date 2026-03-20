@@ -127,7 +127,7 @@ export class Input extends Component {
                 </div>
                 <div>
                   <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount <span className="text-red-500">*</span></label>
-                  <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+                  <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="1" placeholder="0" required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
                 </div>
                 <div>
                   <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date <span className="text-red-500">*</span></label>
