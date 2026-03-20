@@ -17,7 +17,7 @@ describe('DisplaySec2 Component', () => {
     expect(listItem).toHaveClass('border-danger');
 
     // Verify negative sign is displayed
-    expect(screen.getByText(/-\$/i)).toBeInTheDocument();
+    expect(screen.getByText(/-₹/i)).toBeInTheDocument();
     expect(screen.getByText(/50/)).toBeInTheDocument();
   });
 
@@ -29,7 +29,7 @@ describe('DisplaySec2 Component', () => {
     expect(listItem).toHaveClass('border-success');
 
     // Verify positive sign is displayed
-    expect(screen.getByText(/\+\$/i)).toBeInTheDocument();
+    expect(screen.getByText(/\+₹/i)).toBeInTheDocument();
     expect(screen.getByText(/100/)).toBeInTheDocument();
   });
 

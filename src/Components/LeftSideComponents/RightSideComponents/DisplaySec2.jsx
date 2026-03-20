@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 export class DisplaySec2 extends Component {
   render() {
     const isIncome = parseFloat(this.props.dispAmount) >= 0;
-    const absAmount = Math.abs(parseFloat(this.props.dispAmount)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const formattedAmount = (isIncome ? '+' : '-') + '$' + absAmount;
+    const absAmount = Math.abs(parseFloat(this.props.dispAmount)).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const formattedAmount = (isIncome ? '+' : '-') + '₹' + absAmount;
 
     // Based on Expense Tracker Pro logic:
     // Fallback category visual representation
@@ -42,6 +42,7 @@ export class DisplaySec2 extends Component {
           </span>
           <button
             onClick={this.props.trash}
+            title="Delete transaction"
             aria-label={`Delete transaction ${this.props.dispName}`}
             className="w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 transition-opacity"
             style={{ background: 'rgba(239,68,68,0.1)' }}

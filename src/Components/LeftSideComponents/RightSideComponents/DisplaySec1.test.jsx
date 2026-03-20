@@ -8,12 +8,12 @@ describe('DisplaySec1', () => {
     const { container } = render(<DisplaySec1 dispBalAmt={100} Income={200} Expense={100} />);
 
     // Check positive balance text
-    expect(container).toHaveTextContent('$100');
+    expect(container).toHaveTextContent('₹100');
 
     // With the new Expense Tracker Pro design, balance element has ID 'balance-amount' and no longer uses .text-neon-blue
     const balanceElement = container.querySelector('#balance-amount');
     expect(balanceElement).toBeInTheDocument();
-    expect(balanceElement.textContent).toBe('$100.00');
+    expect(balanceElement.textContent).toBe('₹100.00');
   });
 
   it('renders negative balance correctly', () => {
@@ -22,6 +22,6 @@ describe('DisplaySec1', () => {
     // With the new Expense Tracker Pro design, balance element has ID 'balance-amount' and no longer uses .text-neon-pink
     const balanceElement = container.querySelector('#balance-amount');
     expect(balanceElement).toBeInTheDocument();
-    expect(balanceElement.textContent).toBe('-$50.50');
+    expect(balanceElement.textContent).toBe('-₹50.50');
   });
 });
