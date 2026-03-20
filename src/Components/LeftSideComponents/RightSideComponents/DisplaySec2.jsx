@@ -42,6 +42,7 @@ export class DisplaySec2 extends Component {
           </span>
           <button
             onClick={this.props.trash}
+            title="Delete transaction"
             aria-label={`Delete transaction ${this.props.dispName}`}
             className="w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 transition-opacity"
             style={{ background: 'rgba(239,68,68,0.1)' }}
