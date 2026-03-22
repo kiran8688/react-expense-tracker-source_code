@@ -6,3 +6,8 @@
 ## 2025-02-13 - Currency Input Step Validation and Context
 **Learning:** Using `step="1"` on native HTML5 `type="number"` inputs for currency fields prevents users from entering decimal amounts (like cents), resulting in poor UX and failed form submissions due to built-in browser validation. Additionally, inputs lacking visual currency context can be confusing.
 **Action:** Always use `step="0.01"` and `placeholder="0.00"` for currency inputs to allow decimal entry. Combine this with an absolute positioned currency prefix (e.g., `₹`) inside a relative container with appropriate left-padding on the input to provide clear, immediate visual context that matches the application's locale.
+
+## 2024-03-22 - Missing `type="button"` on Transaction Filter Buttons
+**Learning:** Found an accessibility issue where transaction filter buttons ("All", "Income", "Expense") inside the `role="group"` lacked the explicit `type="button"` attribute. This could potentially cause unintended form submissions if these buttons were inside a form, though here they aren't. Still, it's best practice. The buttons used to select the transaction type ("Expense", "Income") in the form *do* need `type="button"` because they are inside a form and could accidentally submit it. I should add `type="button"` to all such toggle buttons.
+
+**Action:** Add `type="button"` to toggle buttons to prevent unintended side-effects and improve semantic correctness. Added `aria-hidden="true"` to decorative required asterisks to improve screen reader experience.

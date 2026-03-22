@@ -100,6 +100,7 @@ export class Input extends Component {
             {/* Type Toggle */}
             <div role="group" aria-label="Transaction Type" className="flex rounded-xl p-1 mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
               <button
+                type="button"
                 id="type-expense"
                 aria-pressed={this.state.currentType === 'expense'}
                 onClick={() => this.setType('expense')}
@@ -109,6 +110,7 @@ export class Input extends Component {
                 Expense
               </button>
               <button
+                type="button"
                 id="type-income"
                 aria-pressed={this.state.currentType === 'income'}
                 onClick={() => this.setType('income')}
@@ -122,18 +124,18 @@ export class Input extends Component {
             <form onSubmit={(e) => { e.preventDefault(); this.inputClickEventHandler(); }}>
               <div className="grid grid-cols-2 gap-3 mb-3">
                 <div className="col-span-2">
-                  <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description <span className="text-red-500">*</span></label>
+                  <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description <span className="text-red-500" aria-hidden="true">*</span></label>
                   <input ref={this.nameInputRef} id="input-title" type="text" placeholder={this.state.currentType === 'income' ? 'e.g. Salary' : 'e.g. Groceries'} required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
                 </div>
                 <div>
-                  <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount <span className="text-red-500">*</span></label>
+                  <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount <span className="text-red-500" aria-hidden="true">*</span></label>
                   <div className="relative flex items-center">
                     <span className="absolute left-4 text-gray-500 font-medium select-none" aria-hidden="true">₹</span>
                     <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" required className="w-full rounded-xl pl-8 pr-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date <span className="text-red-500">*</span></label>
+                  <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date <span className="text-red-500" aria-hidden="true">*</span></label>
                   <input ref={this.dateInputRef} id="input-date" type="date" required className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
                 </div>
               </div>
@@ -153,9 +155,9 @@ export class Input extends Component {
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-400">Recent Activity</h2>
             <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <button onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'all' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>All</button>
-              <button onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'income' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Income</button>
-              <button onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'expense' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Expense</button>
+              <button type="button" onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'all' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>All</button>
+              <button type="button" onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'income' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Income</button>
+              <button type="button" onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'expense' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Expense</button>
             </div>
           </div>
         </section>
