@@ -1,4 +1,3 @@
-
 ## 2025-02-13 - Focus Visibility on Hover-only Elements
 **Learning:** Hidden-on-hover actions (like delete buttons hidden with `opacity-0` until `group-hover:opacity-100`) completely break keyboard accessibility unless paired with equivalent focus states. Keyboard users tabbing through the UI would just see their focus disappear on the hidden element. Furthermore, indiscriminately adding `focus:outline-none` without `focus-visible:ring-x` fallbacks disables default browser focus rings entirely.
 **Action:** When hiding elements visually until hover, always pair `group-hover:opacity-100` with `focus-visible:opacity-100`. Additionally, if replacing default focus outlines with `focus:outline-none`, always provide a custom visible focus indicator using `focus-visible:ring-2` (using a color appropriate for the component's context).
@@ -9,5 +8,8 @@
 
 ## 2024-03-22 - Missing `type="button"` on Transaction Filter Buttons
 **Learning:** Found an accessibility issue where transaction filter buttons ("All", "Income", "Expense") inside the `role="group"` lacked the explicit `type="button"` attribute. This could potentially cause unintended form submissions if these buttons were inside a form, though here they aren't. Still, it's best practice. The buttons used to select the transaction type ("Expense", "Income") in the form *do* need `type="button"` because they are inside a form and could accidentally submit it. I should add `type="button"` to all such toggle buttons.
-
 **Action:** Add `type="button"` to toggle buttons to prevent unintended side-effects and improve semantic correctness. Added `aria-hidden="true"` to decorative required asterisks to improve screen reader experience.
+
+## 2025-03-23 - Discoverability of Hover Actions on Touch Devices
+**Learning:** Relying solely on `opacity-0 group-hover:opacity-100` to hide secondary actions (like delete buttons) makes them completely undiscoverable and often unusable on mobile/touch devices since they lack a hover state. Users are forced to guess where to tap or might not know the feature exists.
+**Action:** When using hover-to-reveal patterns, conditionally apply the hidden state only on screens that support hover or are larger than mobile breakpoint (e.g., `opacity-100 sm:opacity-0 sm:group-hover:opacity-100`). This ensures touch users always see critical actions.

@@ -28,7 +28,7 @@ export class DisplaySec2 extends Component {
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="tx-title text-sm font-semibold text-gray-200 truncate">{this.props.dispName}</p>
+          <p className="tx-title text-sm font-semibold text-gray-200 truncate" title={this.props.dispName}>{this.props.dispName}</p>
           <div className="flex items-center gap-2 mt-0.5">
             <span className="tx-cat text-[11px] font-medium text-gray-500">{catLabel}</span>
             <span className="text-gray-700">·</span>
@@ -44,7 +44,7 @@ export class DisplaySec2 extends Component {
             onClick={this.props.trash}
             title="Delete transaction"
             aria-label={`Delete transaction ${this.props.dispName}`}
-            className="w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 transition-opacity"
+            className="w-7 h-7 rounded-lg flex items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus-visible:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 transition-opacity"
             style={{ background: 'rgba(239,68,68,0.1)' }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f87171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-2">
