@@ -11,3 +11,7 @@
 **Learning:** Found an accessibility issue where transaction filter buttons ("All", "Income", "Expense") inside the `role="group"` lacked the explicit `type="button"` attribute. This could potentially cause unintended form submissions if these buttons were inside a form, though here they aren't. Still, it's best practice. The buttons used to select the transaction type ("Expense", "Income") in the form *do* need `type="button"` because they are inside a form and could accidentally submit it. I should add `type="button"` to all such toggle buttons.
 
 **Action:** Add `type="button"` to toggle buttons to prevent unintended side-effects and improve semantic correctness. Added `aria-hidden="true"` to decorative required asterisks to improve screen reader experience.
+
+## 2024-03-24 - Touch Device Discoverability of Hover Elements
+**Learning:** When using Tailwind to hide elements behind a hover state (`group-hover:opacity-100`), it inherently makes the element invisible and inaccessible on touch devices that lack hover capabilities.
+**Action:** Always provide a default visible state on small viewports (`opacity-100 sm:opacity-0 sm:group-hover:opacity-100`) or pair hover states with an explicit touch action or focus-visible state to ensure discoverability across all device types.
