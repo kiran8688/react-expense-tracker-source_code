@@ -83,6 +83,11 @@ export class Input extends Component {
       return true;
     });
 
+    // Pre-calculate the indices of transactions in the original tracker array
+    // to avoid O(N^2) searches during the map operation in the render list
+    const idToIndexMap = new Map();
+    this.state.tracker.forEach((t, i) => idToIndexMap.set(t.id, i));
+
     return (
       <Fragment>
         <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
@@ -176,9 +181,8 @@ export class Input extends Component {
                 <p className="text-gray-600 text-xs mt-1">Add your first transaction above</p>
               </div>
             ) : (
-              filteredTracker.map((transaction, index) => {
-                // Find actual index in original tracker array for deletion
-                const originalIndex = this.state.tracker.findIndex(t => t.id === transaction.id);
+              filteredTracker.map((transaction) => {
+                const originalIndex = idToIndexMap.get(transaction.id);
                 return (
                   <DisplaySec2
                     key={transaction.id}
