@@ -28,7 +28,7 @@ export class DisplaySec2 extends Component {
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="tx-title text-sm font-semibold text-gray-200 truncate">{this.props.dispName}</p>
+          <p className="tx-title text-sm font-semibold text-gray-200 truncate" title={this.props.dispName}>{this.props.dispName}</p>
           <div className="flex items-center gap-2 mt-0.5">
             <span className="tx-cat text-[11px] font-medium text-gray-500">{catLabel}</span>
             <span className="text-gray-700">·</span>
