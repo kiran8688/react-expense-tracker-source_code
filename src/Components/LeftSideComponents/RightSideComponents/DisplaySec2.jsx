@@ -41,6 +41,7 @@ export class DisplaySec2 extends Component {
             {formattedAmount}
           </span>
           <button
+            type="button"
             onClick={this.props.trash}
             title="Delete transaction"
             aria-label={`Delete transaction ${this.props.dispName}`}
