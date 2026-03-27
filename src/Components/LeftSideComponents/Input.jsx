@@ -42,7 +42,7 @@ export class Input extends Component {
     const checkDate = isNaN(Date.parse(rawDate)) ? new Date().toISOString().split('T')[0] : rawDate;
 
     transactions.unshift({
-      id: crypto.randomUUID(),
+      id: Date.now(),
       transactionName: checkName,
       transactionAmount: finalAmount,
       transactionDate: checkDate,
