@@ -13,3 +13,7 @@
 ## 2024-03-24 - Touch Device Discoverability of Hover Elements
 **Learning:** When using Tailwind to hide elements behind a hover state (`group-hover:opacity-100`), it inherently makes the element invisible and inaccessible on touch devices that lack hover capabilities.
 **Action:** Always provide a default visible state on small viewports (`opacity-100 sm:opacity-0 sm:group-hover:opacity-100`) or pair hover states with an explicit touch action or focus-visible state to ensure discoverability across all device types.
+
+## 2025-02-14 - Actionable Empty States with Filters
+**Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
+**Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.

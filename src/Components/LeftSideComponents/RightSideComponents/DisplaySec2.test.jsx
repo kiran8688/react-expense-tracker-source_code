@@ -41,4 +41,12 @@ describe('DisplaySec2 Component', () => {
 
     expect(defaultProps.trash).toHaveBeenCalledTimes(1);
   });
+
+  test('falls back to raw date string if invalid date is provided', () => {
+    const invalidDate = 'invalid-date-string';
+    render(<DisplaySec2 {...defaultProps} dispAmount={50} dispDate={invalidDate} />);
+
+    // Verify it displays the raw string instead of formatting
+    expect(screen.getByText(invalidDate)).toBeInTheDocument();
+  });
 });

@@ -97,7 +97,7 @@ export class Input extends Component {
 
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
+        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
 
         {/* Add Transaction Form */}
         <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
@@ -192,6 +192,25 @@ export class Input extends Component {
                 <p className="text-gray-600 text-xs mt-1">
                   {this.state.currentFilter === 'all' ? 'Add your first transaction above' : 'Try changing your filter'}
                 </p>
+                {this.state.currentFilter !== 'all' ? (
+                  <button
+                    type="button"
+                    onClick={() => this.setFilter('all')}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
+                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                  >
+                    Clear Filter
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => this.nameInputRef.current?.focus()}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
+                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                  >
+                    Add Transaction
+                  </button>
+                )}
               </div>
             ) : (
               filteredTracker.map((transaction) => {
