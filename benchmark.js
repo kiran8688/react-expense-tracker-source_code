@@ -14,39 +14,56 @@ async function benchmark() {
   }
 
   // Serve the static build
+  const buildDir = path.resolve(__dirname, 'build');
   const server = http.createServer((req, res) => {
-    let filePath = path.join(__dirname, 'build', req.url === '/' ? 'index.html' : req.url);
-    if (!fs.existsSync(filePath)) {
-      filePath = path.join(__dirname, 'build', 'index.html');
-    }
-    const extname = String(path.extname(filePath)).toLowerCase();
-    const mimeTypes = {
-      '.html': 'text/html',
-      '.js': 'text/javascript',
-      '.css': 'text/css',
-      '.json': 'application/json',
-      '.png': 'image/png',
-      '.jpg': 'image/jpg',
-      '.gif': 'image/gif',
-      '.svg': 'image/svg+xml',
-    };
+    try {
+      const decodedPath = decodeURIComponent(req.url);
+      let filePath = path.join(buildDir, decodedPath === '/' ? 'index.html' : decodedPath);
+      filePath = path.resolve(filePath);
 
-    const contentType = mimeTypes[extname] || 'application/octet-stream';
-
-    fs.readFile(filePath, (error, content) => {
-      if (error) {
-        if (error.code == 'ENOENT') {
-          res.writeHead(404);
-          res.end('Not found');
-        } else {
-          res.writeHead(500);
-          res.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
-        }
-      } else {
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(content, 'utf-8');
+      // Path traversal protection: ensure the resolved path is within buildDir
+      const relative = path.relative(buildDir, filePath);
+      if (relative.startsWith('..') || path.isAbsolute(relative)) {
+        res.writeHead(403);
+        res.end('Forbidden');
+        return;
       }
-    });
+
+      if (!fs.existsSync(filePath)) {
+        filePath = path.join(buildDir, 'index.html');
+      }
+      const extname = String(path.extname(filePath)).toLowerCase();
+      const mimeTypes = {
+        '.html': 'text/html',
+        '.js': 'text/javascript',
+        '.css': 'text/css',
+        '.json': 'application/json',
+        '.png': 'image/png',
+        '.jpg': 'image/jpg',
+        '.gif': 'image/gif',
+        '.svg': 'image/svg+xml',
+      };
+
+      const contentType = mimeTypes[extname] || 'application/octet-stream';
+
+      fs.readFile(filePath, (error, content) => {
+        if (error) {
+          if (error.code == 'ENOENT') {
+            res.writeHead(404);
+            res.end('Not found');
+          } else {
+            res.writeHead(500);
+            res.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
+          }
+        } else {
+          res.writeHead(200, { 'Content-Type': contentType });
+          res.end(content, 'utf-8');
+        }
+      });
+    } catch (e) {
+      res.writeHead(400);
+      res.end('Bad Request');
+    }
   });
 
   server.listen(8080, async () => {
