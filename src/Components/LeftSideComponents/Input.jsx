@@ -70,17 +70,17 @@ export class Input extends Component {
   }
 
   render() {
-    const { balance, income, expense } = this.state.tracker.reduce((acc, t) => {
+    const { balanceRaw, incomeRaw, expenseRaw } = this.state.tracker.reduce((acc, t) => {
       const amt = parseFloat(t.transactionAmount);
-      acc.balance += amt;
-      if (amt > 0) acc.income += amt;
-      else if (amt < 0) acc.expense += amt;
+      acc.balanceRaw += amt;
+      if (amt > 0) acc.incomeRaw += amt;
+      else if (amt < 0) acc.expenseRaw += amt;
       return acc;
-    }, { balance: 0, income: 0, expense: 0 });
+    }, { balanceRaw: 0, incomeRaw: 0, expenseRaw: 0 });
 
-    const formattedBalance = balance.toFixed(2);
-    const formattedIncome = income.toFixed(2);
-    const formattedExpense = (expense * -1).toFixed(2);
+    const balance = balanceRaw.toFixed(2);
+    const income = incomeRaw.toFixed(2);
+    const expense = (expenseRaw * -1).toFixed(2);
 
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
