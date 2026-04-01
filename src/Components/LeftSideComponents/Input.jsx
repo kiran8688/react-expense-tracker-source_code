@@ -70,10 +70,17 @@ export class Input extends Component {
   }
 
   render() {
-    const mapAmt = this.state.tracker.map(t => parseFloat(t.transactionAmount))
-    const balance = mapAmt.reduce((a, b) => a + b, 0).toFixed(2)
-    const income = mapAmt.filter(a => a > 0).reduce((a, b) => a + b, 0).toFixed(2)
-    const expense = (mapAmt.filter(a => a < 0).reduce((a, b) => a + b, 0) * -1).toFixed(2)
+    const { balance, income, expense } = this.state.tracker.reduce((acc, t) => {
+      const amt = parseFloat(t.transactionAmount);
+      acc.balance += amt;
+      if (amt > 0) acc.income += amt;
+      else if (amt < 0) acc.expense += amt;
+      return acc;
+    }, { balance: 0, income: 0, expense: 0 });
+
+    const formattedBalance = balance.toFixed(2);
+    const formattedIncome = income.toFixed(2);
+    const formattedExpense = (expense * -1).toFixed(2);
 
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
@@ -90,7 +97,7 @@ export class Input extends Component {
 
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
+        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
 
         {/* Add Transaction Form */}
         <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
