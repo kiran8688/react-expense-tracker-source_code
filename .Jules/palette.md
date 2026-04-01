@@ -13,3 +13,7 @@
 ## 2024-03-24 - Touch Device Discoverability of Hover Elements
 **Learning:** When using Tailwind to hide elements behind a hover state (`group-hover:opacity-100`), it inherently makes the element invisible and inaccessible on touch devices that lack hover capabilities.
 **Action:** Always provide a default visible state on small viewports (`opacity-100 sm:opacity-0 sm:group-hover:opacity-100`) or pair hover states with an explicit touch action or focus-visible state to ensure discoverability across all device types.
+
+## 2025-02-13 - Orphaned List Items and Redundant Screen Reader Content
+**Learning:** When using React components to dynamically render items that explicitly set `role="listitem"`, ensure the parent container explicitly sets `role="list"` and provides an `aria-label`. Without this, screen readers may announce orphaned list items, which breaks accessibility. Additionally, decorative text used as visual icons (like "I" for Income or "E" for Expense) that precede the actual text label should be hidden from screen readers using `aria-hidden="true"` to prevent repetitive, non-sensical announcements.
+**Action:** Always map explicit `role="listitem"` components to a parent element with `role="list"`. Use `aria-hidden="true"` on decorative visual text icons, especially when the full context is provided immediately following it.
