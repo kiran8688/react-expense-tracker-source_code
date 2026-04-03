@@ -17,3 +17,7 @@
 ## 2025-02-14 - Actionable Empty States with Filters
 **Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
 **Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
+
+## 2024-04-03 - Hiding Decorative Text Icons from Screen Readers
+**Learning:** Using decorative text characters (like "I" or "E") as visual icons immediately preceding a full text label (like "Income" or "Expense") causes screen readers to redundantly announce both (e.g., "I Income").
+**Action:** Always apply `aria-hidden="true"` to text-based decorative icons or characters to prevent repetitive, non-sensical screen reader announcements, ensuring a cleaner semantic flow for users relying on assistive technologies.
