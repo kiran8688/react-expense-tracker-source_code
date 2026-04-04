@@ -213,18 +213,20 @@ export class Input extends Component {
                 )}
               </div>
             ) : (
-              filteredTracker.map((transaction) => {
-                const originalIndex = idToIndexMap.get(transaction.id);
-                return (
-                  <DisplaySec2
-                    key={transaction.id}
-                    dispName={transaction.transactionName}
-                    dispAmount={transaction.transactionAmount}
-                    dispDate={transaction.transactionDate}
-                    trash={() => this.deleteHandler(originalIndex)}
-                  />
-                )
-              })
+              <div role="list" aria-label="Transactions">
+                {filteredTracker.map((transaction) => {
+                  const originalIndex = idToIndexMap.get(transaction.id);
+                  return (
+                    <DisplaySec2
+                      key={transaction.id}
+                      dispName={transaction.transactionName}
+                      dispAmount={transaction.transactionAmount}
+                      dispDate={transaction.transactionDate}
+                      trash={() => this.deleteHandler(originalIndex)}
+                    />
+                  )
+                })}
+              </div>
             )}
           </div>
         </section>
