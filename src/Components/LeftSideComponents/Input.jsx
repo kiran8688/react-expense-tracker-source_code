@@ -97,7 +97,7 @@ export class Input extends Component {
 
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
+        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
         {/* Add Transaction Form */}
         <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
