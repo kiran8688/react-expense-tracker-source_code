@@ -70,34 +70,34 @@ export class Input extends Component {
   }
 
   render() {
-    const { balanceRaw, incomeRaw, expenseRaw } = this.state.tracker.reduce((acc, t) => {
+    const idToIndexMap = new Map();
+    const { balanceRaw, incomeRaw, expenseRaw, filteredTracker } = this.state.tracker.reduce((acc, t, i) => {
       const amt = parseFloat(t.transactionAmount);
       acc.balanceRaw += amt;
-      if (amt > 0) acc.incomeRaw += amt;
-      else if (amt < 0) acc.expenseRaw += amt;
+      const isIncome = amt > 0;
+      if (isIncome) {
+        acc.incomeRaw += amt;
+      } else {
+        acc.expenseRaw += amt;
+      }
+
+      if (this.state.currentFilter === 'all' ||
+         (this.state.currentFilter === 'income' && isIncome) ||
+         (this.state.currentFilter === 'expense' && !isIncome)) {
+        acc.filteredTracker.push(t);
+      }
+
+      idToIndexMap.set(t.id, i);
       return acc;
-    }, { balanceRaw: 0, incomeRaw: 0, expenseRaw: 0 });
+    }, { balanceRaw: 0, incomeRaw: 0, expenseRaw: 0, filteredTracker: [] });
 
     const balance = balanceRaw.toFixed(2);
     const income = incomeRaw.toFixed(2);
     const expense = (expenseRaw * -1).toFixed(2);
 
-    const filteredTracker = this.state.tracker.filter(t => {
-      if (this.state.currentFilter === 'all') return true;
-      const isIncome = t.transactionAmount > 0;
-      if (this.state.currentFilter === 'income') return isIncome;
-      if (this.state.currentFilter === 'expense') return !isIncome;
-      return true;
-    });
-
-    // Pre-calculate the indices of transactions in the original tracker array
-    // to avoid O(N^2) searches during the map operation in the render list
-    const idToIndexMap = new Map();
-    this.state.tracker.forEach((t, i) => idToIndexMap.set(t.id, i));
-
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
+        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
         {/* Add Transaction Form */}
         <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
