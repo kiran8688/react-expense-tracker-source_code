@@ -17,3 +17,7 @@
 ## 2025-02-14 - Actionable Empty States with Filters
 **Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
 **Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
+
+## 2025-02-15 - Orphaned List Items from Dynamic Components
+**Learning:** When components render their own `role="listitem"` (e.g., `DisplaySec2.jsx`), dropping them directly into a parent container without explicitly assigning `role="list"` to that container creates "orphaned" list items. Screen readers struggle to announce these properly, failing to communicate list context or total item counts to the user.
+**Action:** Whenever dynamically rendering components that define a list item role, always verify that the direct parent container explicitly declares `role="list"` along with an appropriate `aria-label` to establish proper list semantics.
