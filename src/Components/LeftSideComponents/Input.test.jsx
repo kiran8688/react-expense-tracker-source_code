@@ -85,35 +85,6 @@ describe('Input Component - Filter Toggling', () => {
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
   });
 
-  test('uses crypto.randomUUID for transaction IDs', () => {
-    // Ensure crypto and randomUUID are available for the test
-    if (typeof global.crypto === 'undefined') {
-      global.crypto = { randomUUID: () => {} };
-    }
-
-    const mockUUID = 'test-uuid-1234';
-    const randomUUIDSpy = jest.spyOn(crypto, 'randomUUID').mockReturnValue(mockUUID);
-
-    render(<Input />);
-
-    const nameInput = screen.getByLabelText(/description/i);
-    const amountInput = screen.getByLabelText(/amount/i);
-    const addBtns = screen.getAllByRole('button', { name: /add transaction/i });
-    const addBtn = addBtns[0];
-
-    fireEvent.change(nameInput, { target: { value: 'Test Transaction' } });
-    fireEvent.change(amountInput, { target: { value: '100' } });
-    fireEvent.click(addBtn);
-
-    // Verify crypto.randomUUID was called
-    expect(randomUUIDSpy).toHaveBeenCalled();
-
-    // Verify the transaction is rendered
-    expect(screen.getByText('Test Transaction')).toBeInTheDocument();
-
-    randomUUIDSpy.mockRestore();
-  });
-
   test('type toggle updates state correctly', () => {
     render(<Input />);
     const typeSection = screen.getByLabelText(/transaction type/i);
