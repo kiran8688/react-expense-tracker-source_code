@@ -42,7 +42,7 @@ export class Input extends Component {
     const checkDate = isNaN(Date.parse(rawDate)) ? new Date().toISOString().split('T')[0] : rawDate;
 
     transactions.unshift({
-      id: Date.now(),
+      id: crypto.randomUUID(),
       transactionName: checkName,
       transactionAmount: finalAmount,
       transactionDate: checkDate,
@@ -81,6 +81,11 @@ export class Input extends Component {
     const balance = balanceRaw.toFixed(2);
     const income = incomeRaw.toFixed(2);
     const expense = (expenseRaw * -1).toFixed(2);
+
+    // Add missing formatted variables for backwards compatibility, if they don't exist
+    const formattedBalance = balance;
+    const formattedIncome = income;
+    const formattedExpense = expense;
 
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
