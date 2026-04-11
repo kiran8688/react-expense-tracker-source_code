@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import DisplaySec1 from './RightSideComponents/DisplaySec1';
 import DisplaySec2 from './RightSideComponents/DisplaySec2';
+import './Input.css';
 
 export class Input extends Component {
   constructor(props) {
@@ -97,11 +98,11 @@ export class Input extends Component {
 
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
+        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
         {/* Add Transaction Form */}
-        <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
-          <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <section className="px-5 pt-2 pb-3 anim-slide-up delay-3 section-visible">
+          <div className="rounded-2xl p-5 form-container">
             <div className="flex items-center gap-2 mb-4">
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus-circle">
                 <circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/>
@@ -110,14 +111,13 @@ export class Input extends Component {
             </div>
 
             {/* Type Toggle */}
-            <div role="group" aria-label="Transaction Type" className="flex rounded-xl p-1 mb-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <div role="group" aria-label="Transaction Type" className="flex rounded-xl p-1 mb-4 toggle-group">
               <button
                 type="button"
                 id="type-expense"
                 aria-pressed={this.state.currentType === 'expense'}
                 onClick={() => this.setType('expense')}
-                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'expense' ? 'text-[#f87171]' : 'text-gray-500'}`}
-                style={{ background: this.state.currentType === 'expense' ? 'rgba(239,68,68,0.2)' : 'transparent' }}
+                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'expense' ? 'text-[#f87171] btn-expense-active' : 'text-gray-500'}`}
               >
                 Expense
               </button>
@@ -126,8 +126,7 @@ export class Input extends Component {
                 id="type-income"
                 aria-pressed={this.state.currentType === 'income'}
                 onClick={() => this.setType('income')}
-                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'income' ? 'text-[#34d399]' : 'text-gray-500'}`}
-                style={{ background: this.state.currentType === 'income' ? 'rgba(16,185,129,0.2)' : 'transparent' }}
+                className={`flex-1 py-2 rounded-lg text-sm font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'income' ? 'text-[#34d399] btn-income-active' : 'text-gray-500'}`}
               >
                 Income
               </button>
@@ -137,22 +136,22 @@ export class Input extends Component {
               <div className="grid grid-cols-2 gap-3 mb-3">
                 <div className="col-span-2">
                   <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description <span className="text-red-500" aria-hidden="true">*</span></label>
-                  <input ref={this.nameInputRef} id="input-title" type="text" placeholder={this.state.currentType === 'income' ? 'e.g. Salary' : 'e.g. Groceries'} required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white' }} />
+                  <input ref={this.nameInputRef} id="input-title" type="text" placeholder={this.state.currentType === 'income' ? 'e.g. Salary' : 'e.g. Groceries'} required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 input-field" />
                 </div>
                 <div>
                   <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount <span className="text-red-500" aria-hidden="true">*</span></label>
                   <div className="relative flex items-center">
                     <span className={`absolute left-4 font-medium select-none ${this.state.currentType === 'expense' ? 'text-red-400' : 'text-emerald-400'}`} aria-hidden="true">{this.state.currentType === 'expense' ? '-' : '+'}₹</span>
-                    <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" required className={`w-full rounded-xl pl-10 pr-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentType === 'expense' ? 'text-red-100' : 'text-emerald-100'}`} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }} />
+                    <input ref={this.amountInputRef} id="input-amount" type="number" min="0" step="0.01" placeholder="0.00" required className={`w-full rounded-xl pl-10 pr-4 py-3 text-sm font-medium placeholder-gray-500 mono focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 input-field ${this.state.currentType === 'expense' ? 'text-red-100' : 'text-emerald-100'}`} />
                   </div>
                 </div>
                 <div>
                   <label htmlFor="input-date" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Date <span className="text-red-500" aria-hidden="true">*</span></label>
-                  <input ref={this.dateInputRef} id="input-date" type="date" required className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', colorScheme: 'dark' }} />
+                  <input ref={this.dateInputRef} id="input-date" type="date" required className="w-full rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 input-date" />
                 </div>
               </div>
 
-              <button type="submit" id="add-btn" className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 hover:opacity-90 active:scale-[0.98] transition-all" style={{ background: 'linear-gradient(135deg,#6366f1,#7c3aed)', color: 'white' }}>
+              <button type="submit" id="add-btn" className="btn-primary w-full py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 hover:opacity-90 active:scale-[0.98] transition-all btn-submit">
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
                   <path d="M5 12h14"/><path d="M12 5v14"/>
                 </svg>
@@ -163,23 +162,23 @@ export class Input extends Component {
         </section>
 
         {/* Filter Tabs */}
-        <section className="px-5 pt-1 pb-2 anim-slide-up delay-4" style={{ opacity: 1 }}>
+        <section className="px-5 pt-1 pb-2 anim-slide-up delay-4 section-visible">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-400">Recent Activity</h2>
-            <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5" style={{ background: 'rgba(255,255,255,0.04)' }}>
-              <button type="button" onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'all' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>All</button>
-              <button type="button" onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'income' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Income</button>
-              <button type="button" onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc]' : 'text-gray-500'}`} style={{ background: this.state.currentFilter === 'expense' ? 'rgba(99,102,241,0.2)' : 'transparent' }}>Expense</button>
+            <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5 filter-group">
+              <button type="button" onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'all' ? 'text-[#a5b4fc] btn-filter-active' : 'text-gray-500'}`}>All</button>
+              <button type="button" onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'income' ? 'text-[#a5b4fc] btn-filter-active' : 'text-gray-500'}`}>Income</button>
+              <button type="button" onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === 'expense' ? 'text-[#a5b4fc] btn-filter-active' : 'text-gray-500'}`}>Expense</button>
             </div>
           </div>
         </section>
 
         {/* Transaction List */}
-        <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5" style={{ opacity: 1 }}>
+        <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5 section-visible">
           <div id="transaction-list">
             {filteredTracker.length === 0 ? (
               <div id="empty-state" className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(99,102,241,0.1)' }}>
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 empty-state-icon">
                   <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-receipt">
                     <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>
                   </svg>
@@ -196,8 +195,7 @@ export class Input extends Component {
                   <button
                     type="button"
                     onClick={() => this.setFilter('all')}
-                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
-                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
                     Clear Filter
                   </button>
@@ -205,8 +203,7 @@ export class Input extends Component {
                   <button
                     type="button"
                     onClick={() => this.nameInputRef.current?.focus()}
-                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
-                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
                     Add Transaction
                   </button>
