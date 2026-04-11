@@ -101,8 +101,8 @@ export class Input extends Component {
         <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
         {/* Add Transaction Form */}
-        <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" className="section-visible">
-          <div className="rounded-2xl p-5" className="form-container">
+        <section className="px-5 pt-2 pb-3 anim-slide-up delay-3 section-visible">
+          <div className="rounded-2xl p-5 form-container">
             <div className="flex items-center gap-2 mb-4">
               <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus-circle">
                 <circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/>
@@ -111,7 +111,7 @@ export class Input extends Component {
             </div>
 
             {/* Type Toggle */}
-            <div role="group" aria-label="Transaction Type" className="flex rounded-xl p-1 mb-4" className="toggle-group">
+            <div role="group" aria-label="Transaction Type" className="flex rounded-xl p-1 mb-4 toggle-group">
               <button
                 type="button"
                 id="type-expense"
@@ -164,10 +164,10 @@ export class Input extends Component {
         </section>
 
         {/* Filter Tabs */}
-        <section className="px-5 pt-1 pb-2 anim-slide-up delay-4" className="section-visible">
+        <section className="px-5 pt-1 pb-2 anim-slide-up delay-4 section-visible">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-400">Recent Activity</h2>
-            <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5" className="toggle-group">
+            <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5 filter-group">
               <button type="button" onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "all" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`} >All</button>
               <button type="button" onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "income" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`} >Income</button>
               <button type="button" onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "expense" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`} >Expense</button>
@@ -176,7 +176,7 @@ export class Input extends Component {
         </section>
 
         {/* Transaction List */}
-        <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5" className="section-visible">
+        <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5 section-visible">
           <div id="transaction-list">
             {filteredTracker.length === 0 ? (
               <div id="empty-state" className="flex flex-col items-center justify-center py-12 text-center">
@@ -198,7 +198,7 @@ export class Input extends Component {
                     type="button"
                     onClick={() => this.setFilter('all')}
                     className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
-                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
                     Clear Filter
                   </button>
@@ -207,7 +207,7 @@ export class Input extends Component {
                     type="button"
                     onClick={() => this.nameInputRef.current?.focus()}
                     className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
-                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
                     Add Transaction
                   </button>
