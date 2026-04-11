@@ -70,10 +70,17 @@ export class Input extends Component {
   }
 
   render() {
-    const mapAmt = this.state.tracker.map(t => parseFloat(t.transactionAmount))
-    const balance = mapAmt.reduce((a, b) => a + b, 0).toFixed(2)
-    const income = mapAmt.filter(a => a > 0).reduce((a, b) => a + b, 0).toFixed(2)
-    const expense = (mapAmt.filter(a => a < 0).reduce((a, b) => a + b, 0) * -1).toFixed(2)
+    const { balanceRaw, incomeRaw, expenseRaw } = this.state.tracker.reduce((acc, t) => {
+      const amt = parseFloat(t.transactionAmount);
+      acc.balanceRaw += amt;
+      if (amt > 0) acc.incomeRaw += amt;
+      else if (amt < 0) acc.expenseRaw += amt;
+      return acc;
+    }, { balanceRaw: 0, incomeRaw: 0, expenseRaw: 0 });
+
+    const balance = balanceRaw.toFixed(2);
+    const income = incomeRaw.toFixed(2);
+    const expense = (expenseRaw * -1).toFixed(2);
 
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
@@ -185,6 +192,25 @@ export class Input extends Component {
                 <p className="text-gray-600 text-xs mt-1">
                   {this.state.currentFilter === 'all' ? 'Add your first transaction above' : 'Try changing your filter'}
                 </p>
+                {this.state.currentFilter !== 'all' ? (
+                  <button
+                    type="button"
+                    onClick={() => this.setFilter('all')}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
+                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                  >
+                    Clear Filter
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => this.nameInputRef.current?.focus()}
+                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
+                    style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}
+                  >
+                    Add Transaction
+                  </button>
+                )}
               </div>
             ) : (
               filteredTracker.map((transaction) => {

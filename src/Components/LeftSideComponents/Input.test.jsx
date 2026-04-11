@@ -46,7 +46,8 @@ describe('Input Component - Filter Toggling', () => {
 
     const typeSection = screen.getByLabelText(/transaction type/i);
     const typeIncome = within(typeSection).getByRole('button', { name: /^income$/i });
-    const addBtn = screen.getByRole('button', { name: /add transaction/i });
+    const addBtns = screen.getAllByRole('button', { name: /add transaction/i });
+    const addBtn = addBtns[0]; // Get the main submit button, not the empty state one
 
     fireEvent.click(typeIncome);
     fireEvent.change(nameInput, { target: { value: 'Salary' } });
