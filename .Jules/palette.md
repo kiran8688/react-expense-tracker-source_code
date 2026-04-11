@@ -17,6 +17,7 @@
 ## 2025-02-14 - Actionable Empty States with Filters
 **Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
 **Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
-## 2025-02-14 - Semantic List Requirements and Empty States
-**Learning:** Adding `role="list"` to a parent container to fix orphaned `role="listitem"` elements creates a new accessibility issue if that container sometimes conditionally renders an "empty state" component that lacks list items. Screen readers expect direct children of a `role="list"` to be `listitem`s.
-**Action:** When dynamically rendering components that define their own `role="listitem"`, ensure the parent container explicitly sets `role="list"` (e.g., `<div role="list" aria-label="Transactions">`), but wrap *only* the mapped array output. Do not apply the `list` role to the higher-level container that encapsulates both the list and the empty state.
+
+## 2024-04-03 - Hiding Decorative Text Icons from Screen Readers
+**Learning:** Using decorative text characters (like "I" or "E") as visual icons immediately preceding a full text label (like "Income" or "Expense") causes screen readers to redundantly announce both (e.g., "I Income").
+**Action:** Always apply `aria-hidden="true"` to text-based decorative icons or characters to prevent repetitive, non-sensical screen reader announcements, ensuring a cleaner semantic flow for users relying on assistive technologies.
