@@ -70,10 +70,22 @@ export class Input extends Component {
   }
 
   render() {
-    const mapAmt = this.state.tracker.map(t => parseFloat(t.transactionAmount))
-    const balance = mapAmt.reduce((a, b) => a + b, 0).toFixed(2)
-    const income = mapAmt.filter(a => a > 0).reduce((a, b) => a + b, 0).toFixed(2)
-    const expense = (mapAmt.filter(a => a < 0).reduce((a, b) => a + b, 0) * -1).toFixed(2)
+    let balanceRaw = 0;
+    let incomeRaw = 0;
+    let expenseRaw = 0;
+    const idToIndexMap = new Map();
+
+    this.state.tracker.forEach((t, i) => {
+      const amt = parseFloat(t.transactionAmount);
+      balanceRaw += amt;
+      if (amt > 0) incomeRaw += amt;
+      else if (amt < 0) expenseRaw += amt;
+      idToIndexMap.set(t.id, i);
+    });
+
+    const balance = balanceRaw.toFixed(2);
+    const income = incomeRaw.toFixed(2);
+    const expense = (expenseRaw * -1).toFixed(2);
 
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
@@ -82,11 +94,6 @@ export class Input extends Component {
       if (this.state.currentFilter === 'expense') return !isIncome;
       return true;
     });
-
-    // Pre-calculate the indices of transactions in the original tracker array
-    // to avoid O(N^2) searches during the map operation in the render list
-    const idToIndexMap = new Map();
-    this.state.tracker.forEach((t, i) => idToIndexMap.set(t.id, i));
 
     return (
       <Fragment>
