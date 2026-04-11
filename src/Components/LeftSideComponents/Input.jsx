@@ -42,7 +42,7 @@ export class Input extends Component {
     const checkDate = isNaN(Date.parse(rawDate)) ? new Date().toISOString().split('T')[0] : rawDate;
 
     transactions.unshift({
-      id: Date.now(),
+      id: crypto.randomUUID(),
       transactionName: checkName,
       transactionAmount: finalAmount,
       transactionDate: checkDate,
@@ -102,7 +102,7 @@ export class Input extends Component {
 
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
+        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
         {/* Add Transaction Form */}
         <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
