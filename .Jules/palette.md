@@ -17,3 +17,7 @@
 ## 2025-02-14 - Actionable Empty States with Filters
 **Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
 **Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
+
+## 2025-04-08 - Explicit List Roles for Dynamic Children
+**Learning:** When dynamically rendering child components that have explicit roles like `role="listitem"` (e.g., in a mapped array of transaction records), screen readers will announce these as orphaned or invalid items if the parent container doesn't explicitly have `role="list"`. Relying on default semantic tags like `<ul>` or `<ol>` is preferred, but when using `<div>`s for layout flexibility, the `role="list"` attribute is mandatory.
+**Action:** Always verify that parent containers of `role="listitem"` components explicitly define `role="list"` along with an `aria-label` (e.g., "Transaction History") to provide proper context to screen reader users and prevent orphaned item announcements.
