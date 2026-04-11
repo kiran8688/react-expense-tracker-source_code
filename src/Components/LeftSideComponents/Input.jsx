@@ -168,9 +168,9 @@ export class Input extends Component {
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-sm font-semibold text-gray-400">Recent Activity</h2>
             <div role="group" aria-label="Transaction Filter" className="flex rounded-lg p-0.5 filter-group">
-              <button type="button" onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "all" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`} >All</button>
-              <button type="button" onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "income" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`} >Income</button>
-              <button type="button" onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "expense" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`} >Expense</button>
+              <button type="button" onClick={() => this.setFilter('all')} id="filter-all" aria-pressed={this.state.currentFilter === 'all'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "all" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`}>All</button>
+              <button type="button" onClick={() => this.setFilter('income')} id="filter-income" aria-pressed={this.state.currentFilter === 'income'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "income" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`}>Income</button>
+              <button type="button" onClick={() => this.setFilter('expense')} id="filter-expense" aria-pressed={this.state.currentFilter === 'expense'} className={`px-3 py-1 rounded-md text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 ${this.state.currentFilter === "expense" ? "text-[#a5b4fc] btn-filter-active" : "text-gray-500"}`}>Expense</button>
             </div>
           </div>
         </section>
@@ -197,7 +197,6 @@ export class Input extends Component {
                   <button
                     type="button"
                     onClick={() => this.setFilter('all')}
-                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
                     className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
                     Clear Filter
@@ -206,7 +205,6 @@ export class Input extends Component {
                   <button
                     type="button"
                     onClick={() => this.nameInputRef.current?.focus()}
-                    className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80"
                     className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
                     Add Transaction
