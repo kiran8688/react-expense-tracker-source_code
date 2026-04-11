@@ -97,7 +97,7 @@ export class Input extends Component {
 
     return (
       <Fragment>
-        <DisplaySec1 dispBalAmt={formattedBalance} Income={formattedIncome} Expense={formattedExpense} />
+        <DisplaySec1 dispBalAmt={balance} Income={income} Expense={expense} />
 
         {/* Add Transaction Form */}
         <section className="px-5 pt-2 pb-3 anim-slide-up delay-3" style={{ opacity: 1 }}>
@@ -176,7 +176,7 @@ export class Input extends Component {
 
         {/* Transaction List */}
         <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5" style={{ opacity: 1 }}>
-          <div id="transaction-list">
+          <div id="transaction-list" role="list" aria-label="Transactions">
             {filteredTracker.length === 0 ? (
               <div id="empty-state" className="flex flex-col items-center justify-center py-12 text-center">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(99,102,241,0.1)' }}>
