@@ -42,7 +42,7 @@ export class Input extends Component {
     const checkDate = isNaN(Date.parse(rawDate)) ? new Date().toISOString().split('T')[0] : rawDate;
 
     transactions.unshift({
-      id: crypto.randomUUID(),
+      id: Date.now(),
       transactionName: checkName,
       transactionAmount: finalAmount,
       transactionDate: checkDate,
@@ -81,11 +81,6 @@ export class Input extends Component {
     const balance = balanceRaw.toFixed(2);
     const income = incomeRaw.toFixed(2);
     const expense = (expenseRaw * -1).toFixed(2);
-
-    // Add missing formatted variables for backwards compatibility, if they don't exist
-    const formattedBalance = balance;
-    const formattedIncome = income;
-    const formattedExpense = expense;
 
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
@@ -181,7 +176,7 @@ export class Input extends Component {
 
         {/* Transaction List */}
         <section className="px-5 pb-8 flex-1 overflow-auto scrollbar-thin anim-slide-up delay-5" style={{ opacity: 1 }}>
-          <div id="transaction-list" role="list" aria-label="Transactions">
+          <div id="transaction-list">
             {filteredTracker.length === 0 ? (
               <div id="empty-state" className="flex flex-col items-center justify-center py-12 text-center">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(99,102,241,0.1)' }}>
@@ -218,20 +213,18 @@ export class Input extends Component {
                 )}
               </div>
             ) : (
-              <div role="list" aria-label="Transactions">
-                {filteredTracker.map((transaction) => {
-                  const originalIndex = idToIndexMap.get(transaction.id);
-                  return (
-                    <DisplaySec2
-                      key={transaction.id}
-                      dispName={transaction.transactionName}
-                      dispAmount={transaction.transactionAmount}
-                      dispDate={transaction.transactionDate}
-                      trash={() => this.deleteHandler(originalIndex)}
-                    />
-                  )
-                })}
-              </div>
+              filteredTracker.map((transaction) => {
+                const originalIndex = idToIndexMap.get(transaction.id);
+                return (
+                  <DisplaySec2
+                    key={transaction.id}
+                    dispName={transaction.transactionName}
+                    dispAmount={transaction.transactionAmount}
+                    dispDate={transaction.transactionDate}
+                    trash={() => this.deleteHandler(originalIndex)}
+                  />
+                )
+              })
             )}
           </div>
         </section>
