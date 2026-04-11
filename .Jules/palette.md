@@ -14,10 +14,6 @@
 **Learning:** When using Tailwind to hide elements behind a hover state (`group-hover:opacity-100`), it inherently makes the element invisible and inaccessible on touch devices that lack hover capabilities.
 **Action:** Always provide a default visible state on small viewports (`opacity-100 sm:opacity-0 sm:group-hover:opacity-100`) or pair hover states with an explicit touch action or focus-visible state to ensure discoverability across all device types.
 
-## 2025-02-14 - Actionable Empty States with Filters
-**Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
-**Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
-
-## 2025-02-15 - Orphaned List Items from Dynamic Components
-**Learning:** When components render their own `role="listitem"` (e.g., `DisplaySec2.jsx`), dropping them directly into a parent container without explicitly assigning `role="list"` to that container creates "orphaned" list items. Screen readers struggle to announce these properly, failing to communicate list context or total item counts to the user.
-**Action:** Whenever dynamically rendering components that define a list item role, always verify that the direct parent container explicitly declares `role="list"` along with an appropriate `aria-label` to establish proper list semantics.
+## 2025-02-13 - Orphaned `role="listitem"` Components
+**Learning:** A critical accessibility issue occurs when child components internally declare `role="listitem"`, but their dynamically rendered parent container lacks the corresponding `role="list"` attribute. Screen readers treat these items as isolated elements rather than part of a cohesive collection, breaking list navigation and failing to announce the total number of items to users relying on assistive technologies.
+**Action:** When a component is designed to render as a list item (e.g., using `role="listitem"`), always explicitly set `role="list"` and an appropriate `aria-label` or `aria-labelledby` on the parent container responsible for mapping and rendering those items. This ensures proper semantic structure and context for screen reader users.
