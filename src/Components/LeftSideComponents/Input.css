@@ -1,1 +1,55 @@
-/* Empty file */
+.form-container {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.toggle-group {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.btn-expense-active {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.btn-income-active {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.input-field {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.input-date {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+  color-scheme: dark;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #6366f1, #7c3aed);
+  color: white;
+}
+
+.filter-group {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.btn-filter-active {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.empty-state-icon {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.btn-empty-state {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+}
+
+.section-visible {
+  opacity: 1;
+}

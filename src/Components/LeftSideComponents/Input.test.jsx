@@ -46,20 +46,26 @@ describe('Input Component - Filter Toggling', () => {
 
     const typeSection = screen.getByLabelText(/transaction type/i);
     const typeIncome = within(typeSection).getByRole('button', { name: /^income$/i });
-    const addBtns = screen.getAllByRole('button', { name: /add transaction/i });
-    const addBtn = addBtns[0]; // Get the main submit button, not the empty state one
 
     fireEvent.click(typeIncome);
+
+    const addBtnsIncome = screen.getAllByRole('button', { name: /add income/i });
+    const addBtnIncome = addBtnsIncome[0]; // Get the main submit button, not the empty state one
+
     fireEvent.change(nameInput, { target: { value: 'Salary' } });
     fireEvent.change(amountInput, { target: { value: '5000' } });
-    fireEvent.click(addBtn);
+    fireEvent.click(addBtnIncome);
 
     // Add an expense transaction
     const typeExpense = within(typeSection).getByRole('button', { name: /^expense$/i });
     fireEvent.click(typeExpense);
+
+    const addBtnsExpense = screen.getAllByRole('button', { name: /add expense/i });
+    const addBtnExpense = addBtnsExpense[0]; // Get the main submit button, not the empty state one
+
     fireEvent.change(nameInput, { target: { value: 'Groceries' } });
     fireEvent.change(amountInput, { target: { value: '100' } });
-    fireEvent.click(addBtn);
+    fireEvent.click(addBtnExpense);
 
     // Default 'All' filter should show both
     expect(screen.getAllByRole('listitem')).toHaveLength(2);
