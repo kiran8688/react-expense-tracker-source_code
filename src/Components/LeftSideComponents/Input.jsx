@@ -83,10 +83,6 @@ export class Input extends Component {
     const income = incomeRaw.toFixed(2);
     const expense = (expenseRaw * -1).toFixed(2);
 
-    const formattedBalance = balance;
-    const formattedIncome = income;
-    const formattedExpense = expense;
-
     const filteredTracker = this.state.tracker.filter(t => {
       if (this.state.currentFilter === 'all') return true;
       const isIncome = t.transactionAmount > 0;
@@ -142,7 +138,7 @@ export class Input extends Component {
               <div className="grid grid-cols-2 gap-3 mb-3">
                 <div className="col-span-2">
                   <label htmlFor="input-title" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Description <span className="text-red-500" aria-hidden="true">*</span></label>
-                  <input ref={this.nameInputRef} id="input-title" type="text" placeholder={this.state.currentType === 'income' ? 'e.g. Salary' : 'e.g. Groceries'} required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 input-field" />
+                  <input ref={this.nameInputRef} id="input-title" type="text" maxLength="100" placeholder={this.state.currentType === 'income' ? 'e.g. Salary' : 'e.g. Groceries'} required className="w-full rounded-xl px-4 py-3 text-sm font-medium placeholder-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50 input-field" />
                 </div>
                 <div>
                   <label htmlFor="input-amount" className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Amount <span className="text-red-500" aria-hidden="true">*</span></label>
@@ -161,7 +157,7 @@ export class Input extends Component {
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
                   <path d="M5 12h14"/><path d="M12 5v14"/>
                 </svg>
-                <span>Add Transaction</span>
+                <span>{this.state.currentType === 'income' ? 'Add Income' : 'Add Expense'}</span>
               </button>
             </form>
           </div>
@@ -211,7 +207,7 @@ export class Input extends Component {
                     onClick={() => this.nameInputRef.current?.focus()}
                     className="mt-4 px-4 py-2 rounded-lg text-xs font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-opacity-80 btn-empty-state"
                   >
-                    Add Transaction
+                    {this.state.currentType === 'income' ? 'Add Income' : 'Add Expense'}
                   </button>
                 )}
               </div>
