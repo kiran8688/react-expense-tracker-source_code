@@ -1,3 +1,27 @@
-## 2024-04-12 - Dynamic Submit Button Context & MaxLength Constraints
-**Learning:** Hardcoded "Add Transaction" buttons lacked context regarding whether an expense or income was being added. Additionally, the description input lacked a maximum length constraint, potentially allowing extremely long strings to disrupt the UI layout.
-**Action:** Implemented dynamic button text ("Add Income" vs "Add Expense") based on the selected transaction type to provide clear contextual feedback. Added a `maxLength="100"` attribute to the description input to enforce sensible constraints and maintain UI integrity. Ensure Playwright scripts account for these dynamic DOM elements when verifying state.
+## 2025-02-13 - Focus Visibility on Hover-only Elements
+**Learning:** Hidden-on-hover actions (like delete buttons hidden with `opacity-0` until `group-hover:opacity-100`) completely break keyboard accessibility unless paired with equivalent focus states. Keyboard users tabbing through the UI would just see their focus disappear on the hidden element. Furthermore, indiscriminately adding `focus:outline-none` without `focus-visible:ring-x` fallbacks disables default browser focus rings entirely.
+**Action:** When hiding elements visually until hover, always pair `group-hover:opacity-100` with `focus-visible:opacity-100`. Additionally, if replacing default focus outlines with `focus:outline-none`, always provide a custom visible focus indicator using `focus-visible:ring-2` (using a color appropriate for the component's context).
+
+## 2025-02-13 - Currency Input Step Validation and Context
+**Learning:** Using `step="1"` on native HTML5 `type="number"` inputs for currency fields prevents users from entering decimal amounts (like cents), resulting in poor UX and failed form submissions due to built-in browser validation. Additionally, inputs lacking visual currency context can be confusing.
+**Action:** Always use `step="0.01"` and `placeholder="0.00"` for currency inputs to allow decimal entry. Combine this with an absolute positioned currency prefix (e.g., `₹`) inside a relative container with appropriate left-padding on the input to provide clear, immediate visual context that matches the application's locale.
+
+## 2024-03-22 - Missing `type="button"` on Transaction Filter Buttons
+**Learning:** Found an accessibility issue where transaction filter buttons ("All", "Income", "Expense") inside the `role="group"` lacked the explicit `type="button"` attribute. This could potentially cause unintended form submissions if these buttons were inside a form, though here they aren't. Still, it's best practice. The buttons used to select the transaction type ("Expense", "Income") in the form *do* need `type="button"` because they are inside a form and could accidentally submit it. I should add `type="button"` to all such toggle buttons.
+**Action:** Add `type="button"` to toggle buttons to prevent unintended side-effects and improve semantic correctness. Added `aria-hidden="true"` to decorative required asterisks to improve screen reader experience.
+
+## 2024-03-24 - Touch Device Discoverability of Hover Elements
+**Learning:** When using Tailwind to hide elements behind a hover state (`group-hover:opacity-100`), it inherently makes the element invisible and inaccessible on touch devices that lack hover capabilities.
+**Action:** Always provide a default visible state on small viewports (`opacity-100 sm:opacity-0 sm:group-hover:opacity-100`) or pair hover states with an explicit touch action or focus-visible state to ensure discoverability across all device types.
+
+## 2025-02-14 - Actionable Empty States with Filters
+**Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
+**Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
+
+## 2024-04-11 - Redundant Screen Reader Announcements on Category Icons
+**Learning:** Decorative icons represented by single letters (e.g., 'I' for Income, 'E' for Expense) without `aria-hidden="true"` get read out by screen readers sequentially right before the full text label ("Income", "Expense"), causing confusing or redundant announcements like "I, Income".
+**Action:** When using letter-based or symbolic icons that have an adjacent full-text label explaining their meaning, always apply `aria-hidden="true"` to the decorative icon wrapper.
+
+## 2024-04-11 - Semantic List Requirements and Empty States
+**Learning:** Adding `role="list"` to a parent container to fix orphaned `role="listitem"` elements creates a new accessibility issue if that container sometimes conditionally renders an "empty state" component that lacks list items. Screen readers expect direct children of a `role="list"` to be `listitem`s.
+**Action:** When dynamically rendering components that define their own `role="listitem"`, ensure the parent container explicitly sets `role="list"` (e.g., `<div role="list" aria-label="Transactions">`), but wrap *only* the mapped array output. Do not apply the `list` role to the higher-level container that encapsulates both the list and the empty state.

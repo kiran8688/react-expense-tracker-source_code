@@ -23,8 +23,8 @@ export class DisplaySec2 extends Component {
 
     return (
       <div role="listitem" id={isIncome ? 'successLi' : 'dangerLi'} className={`transaction-item flex items-center gap-3 p-3.5 rounded-xl mb-2 cursor-default group ${isIncome ? 'border-success' : 'border-danger'}`} style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-        <div aria-hidden="true" className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${catColor}18` }}>
-          <span className="text-base">{catIcon}</span>
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${catColor}18` }}>
+          <span className="text-base" aria-hidden="true">{catIcon}</span>
         </div>
 
         <div className="flex-1 min-w-0">
