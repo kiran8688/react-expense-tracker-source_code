@@ -6,10 +6,6 @@
 **Learning:** Using `step="1"` on native HTML5 `type="number"` inputs for currency fields prevents users from entering decimal amounts (like cents), resulting in poor UX and failed form submissions due to built-in browser validation. Additionally, inputs lacking visual currency context can be confusing.
 **Action:** Always use `step="0.01"` and `placeholder="0.00"` for currency inputs to allow decimal entry. Combine this with an absolute positioned currency prefix (e.g., `₹`) inside a relative container with appropriate left-padding on the input to provide clear, immediate visual context that matches the application's locale.
 
-## 2026-04-04 - Orphaned List Items and Decorative Text Icons
-**Learning:** When dynamically rendering components that specify `role="listitem"`, the parent container must explicitly set `role="list"` (and ideally an `aria-label`) to ensure screen readers correctly interpret the list structure. Additionally, text intended as decorative icons (e.g., a simple 'I' or 'E' preceding a full text label) should have `aria-hidden="true"` applied to prevent repetitive, nonsensical screen reader announcements.
-**Action:** Always verify that elements using `role="listitem"` are contained within an element that has `role="list"`. Use `aria-hidden="true"` on non-semantic icon wrappers, even if the icon is text.
-
 ## 2024-03-22 - Missing `type="button"` on Transaction Filter Buttons
 **Learning:** Found an accessibility issue where transaction filter buttons ("All", "Income", "Expense") inside the `role="group"` lacked the explicit `type="button"` attribute. This could potentially cause unintended form submissions if these buttons were inside a form, though here they aren't. Still, it's best practice. The buttons used to select the transaction type ("Expense", "Income") in the form *do* need `type="button"` because they are inside a form and could accidentally submit it. I should add `type="button"` to all such toggle buttons.
 **Action:** Add `type="button"` to toggle buttons to prevent unintended side-effects and improve semantic correctness. Added `aria-hidden="true"` to decorative required asterisks to improve screen reader experience.
@@ -21,3 +17,11 @@
 ## 2025-02-14 - Actionable Empty States with Filters
 **Learning:** Empty states caused by active filters ("No expense transactions") often lead to dead ends if the user forgets a filter is active or doesn't immediately see the filter controls. Just adding text like "Try changing your filter" is insufficient for keyboard or screen reader users.
 **Action:** Always include a 1-click semantic `<button type="button">` to clear the filter directly within the empty state context itself. If no filter is active, provide a CTA to jump focus to the primary input form.
+
+## 2024-04-11 - Redundant Screen Reader Announcements on Category Icons
+**Learning:** Decorative icons represented by single letters (e.g., 'I' for Income, 'E' for Expense) without `aria-hidden="true"` get read out by screen readers sequentially right before the full text label ("Income", "Expense"), causing confusing or redundant announcements like "I, Income".
+**Action:** When using letter-based or symbolic icons that have an adjacent full-text label explaining their meaning, always apply `aria-hidden="true"` to the decorative icon wrapper.
+
+## 2024-04-11 - Semantic List Requirements and Empty States
+**Learning:** Adding `role="list"` to a parent container to fix orphaned `role="listitem"` elements creates a new accessibility issue if that container sometimes conditionally renders an "empty state" component that lacks list items. Screen readers expect direct children of a `role="list"` to be `listitem`s.
+**Action:** When dynamically rendering components that define their own `role="listitem"`, ensure the parent container explicitly sets `role="list"` (e.g., `<div role="list" aria-label="Transactions">`), but wrap *only* the mapped array output. Do not apply the `list` role to the higher-level container that encapsulates both the list and the empty state.
