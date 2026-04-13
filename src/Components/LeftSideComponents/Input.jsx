@@ -9,7 +9,8 @@ export class Input extends Component {
     this.state = {
       tracker: [],
       currentType: 'expense',
-      currentFilter: 'all'
+      currentFilter: 'all',
+      itemToDelete: null
     }
     this.amountInputRef = React.createRef();
     this.nameInputRef = React.createRef();
@@ -58,9 +59,19 @@ export class Input extends Component {
   }
 
   deleteHandler = (index) => {
-    const transactions = [...this.state.tracker]
-    transactions.splice(index, 1)
-    this.setState({ tracker: transactions })
+    this.setState({ itemToDelete: index });
+  }
+
+  confirmDelete = () => {
+    if (this.state.itemToDelete !== null) {
+      const transactions = [...this.state.tracker]
+      transactions.splice(this.state.itemToDelete, 1)
+      this.setState({ tracker: transactions, itemToDelete: null })
+    }
+  }
+
+  cancelDelete = () => {
+    this.setState({ itemToDelete: null });
   }
 
   componentDidMount() {
@@ -229,6 +240,34 @@ export class Input extends Component {
             )}
           </div>
         </section>
+
+        {/* Delete Confirmation Modal */}
+        {this.state.itemToDelete !== null && (
+          <div className="confirm-overlay" role="dialog" aria-labelledby="confirm-title" aria-describedby="confirm-desc" aria-modal="true">
+            <div className="confirm-box" style={{ background: '#12121a', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <h3 id="confirm-title" className="text-lg font-bold text-gray-200 mb-2">Delete Transaction?</h3>
+              <p id="confirm-desc" className="text-sm text-gray-400 mb-6">Are you sure you want to delete this transaction? This action cannot be undone.</p>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={this.cancelDelete}
+                  autoFocus
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-gray-300 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 hover:bg-white/5"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={this.confirmDelete}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 hover:opacity-90 active:scale-[0.98]"
+                  style={{ background: '#ef4444' }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </Fragment>
     )

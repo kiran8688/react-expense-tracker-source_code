@@ -25,3 +25,6 @@
 ## 2024-04-11 - Semantic List Requirements and Empty States
 **Learning:** Adding `role="list"` to a parent container to fix orphaned `role="listitem"` elements creates a new accessibility issue if that container sometimes conditionally renders an "empty state" component that lacks list items. Screen readers expect direct children of a `role="list"` to be `listitem`s.
 **Action:** When dynamically rendering components that define their own `role="listitem"`, ensure the parent container explicitly sets `role="list"` (e.g., `<div role="list" aria-label="Transactions">`), but wrap *only* the mapped array output. Do not apply the `list` role to the higher-level container that encapsulates both the list and the empty state.
+## 2026-04-13 - Prevent Accidental Deletion
+**Learning:** Found unused accessible confirmation dialog classes (`.confirm-overlay`, `.confirm-box`) in the global CSS, indicating a missed opportunity for safety on destructive actions.
+**Action:** Always wrap destructive actions like item deletion in a confirmation dialog when the UI classes are available to prevent accidental data loss and improve user confidence.
